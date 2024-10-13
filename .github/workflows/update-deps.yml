@@ -22,7 +22,7 @@ jobs:
         with:
           python-version: 3.8
       - name: Restore PDM installation
-        uses: ./.github/actions/restore-pdm  
+        uses: ./.github/actions/restore-pdm
       - name: Update dependencies
         run: pdm update --update-all --unconstrained
       - name: Create Pull Request
