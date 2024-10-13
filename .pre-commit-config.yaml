@@ -12,7 +12,7 @@ repos:
     -   id: debug-statements
 
 -   repo: https://github.com/psf/black
-    rev: 24.8.0
+    rev: 24.10.0
     hooks:
     -   id: black
 
@@ -39,6 +39,6 @@ repos:
     -   id: clang-format
 
 -   repo: https://github.com/crate-ci/typos
-    rev: v1.25.0
+    rev: v1.26.0
     hooks:
     -   id: typos
