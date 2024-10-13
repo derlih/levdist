@@ -96,8 +96,7 @@ static PyObject *method_wagner_fischer(PyObject *self, PyObject *args) {
 }
 
 static PyMethodDef NativeMethods[] = {
-    {"wagner_fischer_native", method_wagner_fischer, METH_VARARGS,
-     "Python interface for levenshtein.c library"},
+    {"wagner_fischer_native", method_wagner_fischer, METH_VARARGS, ""},
     {NULL, NULL, 0, NULL}};
 
 static struct PyModuleDef nativemodule = {PyModuleDef_HEAD_INIT, "native", NULL,
