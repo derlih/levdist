@@ -44,7 +44,7 @@ test = [
 ]
 lint = [
     "pre-commit>=3.5.0",
-    "mypy>=1.12.1",
+    "mypy>=1.13.0",
 ]
 benchmark = [
     "pylev>=1.4.0",
