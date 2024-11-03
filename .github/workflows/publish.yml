@@ -24,14 +24,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Install python
-        uses: actions/setup-python@v5
-        id: setup-python
+      - name: Setup PDM
+        uses: pdm-project/setup-pdm@v4
         with:
           python-version: ${{ matrix.python_version }}
-      - name: Restore PDM installation
-        id: pdm
-        uses: ./.github/actions/restore-pdm
       - name: Build wheel
         run: pdm build --no-sdist
       - name: Upload wheel artifact
@@ -52,14 +48,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Install python
-        uses: actions/setup-python@v5
-        id: setup-python
+      - name: Setup PDM
+        uses: pdm-project/setup-pdm@v4
         with:
-          python-version: 3.8
-      - name: Restore PDM installation
-        id: pdm
-        uses: ./.github/actions/restore-pdm
+          python-version: 3.9
       - name: Install twine
         run: pip install twine
       - name: Build sdist
