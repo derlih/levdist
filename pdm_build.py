@@ -37,6 +37,7 @@ def pdm_build_update_setup_kwargs(
         extra_compile_args = COVERAGE_FLAGS.get(_get_compiler(), [])
     else:
         extra_compile_args = []
+
     setup_kwargs.update(
         ext_modules=[
             Extension(

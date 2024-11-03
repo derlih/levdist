@@ -8,6 +8,13 @@ import typer
 
 from levdist import levenshtein
 
+try:
+    from leven import levenshtein
+
+    LEVEN_PRESENT = True
+except ImportError:
+    LEVEN_PRESENT = False
+
 ITERATIONS = 1_000_000
 # `leven` has some hacks that remove same prefix and suffix.
 # To measure it fair I adjusted the strings.
@@ -24,7 +31,7 @@ class PackageToTest:
     call: str
 
 
-PACKAGES = (
+PACKAGES = [
     PackageToTest(
         "levdist",
         "https://pypi.org/project/levdist/",
@@ -38,18 +45,22 @@ PACKAGES = (
         f"distance('{S1}', '{S2}')",
     ),
     PackageToTest(
-        "leven",
-        "https://pypi.org/project/leven/",
-        "from leven import levenshtein",
-        f"levenshtein('{S1}', '{S2}')",
-    ),
-    PackageToTest(
         "pylev",
         "https://pypi.org/project/pylev/",
         "from pylev import levenshtein",
         f"levenshtein('{S1}', '{S2}')",
     ),
-)
+]
+
+if LEVEN_PRESENT:
+    PACKAGES.append(
+        PackageToTest(
+            "leven",
+            "https://pypi.org/project/leven/",
+            "from leven import levenshtein",
+            f"levenshtein('{S1}', '{S2}')",
+        )
+    )
 
 
 class OutputFormat(str, Enum):
