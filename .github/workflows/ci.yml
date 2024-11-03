@@ -35,3 +35,27 @@ jobs:
         uses: ./.github/actions/run-test-report-coverage
         with:
           codecov-token: ${{ secrets.CODECOV_TOKEN }}
+
+  test-musllinux:
+    permissions:
+      contents: read
+
+    name: Unit tests (musllinux)
+    strategy:
+      matrix:
+        python_version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
+      fail-fast: true
+    runs-on: ubuntu-latest
+    container:
+      image: python:${{ matrix.python_version }}-alpine
+
+    steps:
+      - name: Install alpine deps
+        run: apk add --no-cache alpine-sdk bash
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run test with report coverage
+        uses: ./.github/actions/run-test-report-coverage
+        with:
+          codecov-token: ${{ secrets.CODECOV_TOKEN }}
+          tag: -alpine

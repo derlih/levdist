@@ -4,9 +4,15 @@ inputs:
     description: "OpenCppCoverage version to install"
     required: true
     default: "0.9.9.0"
+
   codecov-token:
     description: "Codecov token"
     required: true
+
+  tag:
+    description: "Tag will be added to cached PDM key"
+    required: true
+    default: ""
 runs:
   using: "composite"
   steps:
@@ -27,6 +33,8 @@ runs:
     - name: Restore PDM installation
       id: pdm
       uses: ./.github/actions/restore-pdm
+      with:
+        pdm-cache-tag: ${{ inputs.tag }}
     - name: Get Python version
       id: get-python-version
       uses: ./.github/actions/get-python-version
@@ -78,4 +86,4 @@ runs:
       with:
         token: ${{ inputs.codecov-token }}
         files: ./coverage.xml,./native.xml
-        flags: OS-${{ runner.os }}-Python-${{ steps.get-python-version.outputs.python-version }}
+        flags: OS-${{ runner.os }}${{ inputs.tag }}-Python-${{ steps.get-python-version.outputs.python-version }}
