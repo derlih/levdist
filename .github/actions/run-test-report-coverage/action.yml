@@ -7,6 +7,9 @@ inputs:
   codecov-token:
     description: "Codecov token"
     required: true
+  python-version:
+    description: "Python version"
+    required: true
 runs:
   using: "composite"
   steps:
@@ -24,35 +27,27 @@ runs:
       if: runner.os == 'windows'
       shell: pwsh
       run: echo "C:\Program Files\OpenCppCoverage" >> $env:GITHUB_PATH
-    - name: Restore PDM installation
-      id: pdm
-      uses: ./.github/actions/restore-pdm
-    - name: Get Python version
-      id: get-python-version
-      uses: ./.github/actions/get-python-version
-    - name: Restore test cache
-      id: cache-pdm-test
-      uses: actions/cache@v4
+    - name: Setup PDM
+      uses: pdm-project/setup-pdm@v4
       with:
-        path: ${{ steps.pdm.outputs.pdm-cache-dir }}
-        key: ${{ runner.os }}-${{ steps.get-python-version.outputs.python-version }}-pdm-test-${{ hashFiles('pyproject.toml', 'pdm.lock') }}
-    - name: Install lint deps (CL)
+        python-version: ${{ inputs.python-version }}
+    - name: Install deps (CL)
       if: runner.os == 'windows'
       shell: bash
-      run: pdm install -v -G test
+      run: pdm install -v
       env:
         WITH_COVERAGE: 1
-    - name: Install lint deps (LLVM)
+    - name: Install deps (LLVM)
       if: matrix.os == 'macos'
       shell: bash
-      run: pdm install -v -G test
+      run: pdm install -v
       env:
         WITH_COVERAGE: 1
         CC: clang
-    - name: Install lint deps (GCC)
+    - name: Install deps (GCC)
       if: runner.os == 'ubuntu'
       shell: bash
-      run: pdm install -v -G test
+      run: pdm install -v
       env:
         WITH_COVERAGE: 1
         CC: gcc
@@ -78,4 +73,4 @@ runs:
       with:
         token: ${{ inputs.codecov-token }}
         files: ./coverage.xml,./native.xml
-        flags: OS-${{ runner.os }}-Python-${{ steps.get-python-version.outputs.python-version }}
+        flags: OS-${{ runner.os }}-Python-${{ inputs.python-version }}

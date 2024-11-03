@@ -34,4 +34,5 @@ jobs:
       - name: Run test with report coverage
         uses: ./.github/actions/run-test-report-coverage
         with:
+          python-version: ${{ matrix.python_version }}
           codecov-token: ${{ secrets.CODECOV_TOKEN }}
