@@ -25,7 +25,7 @@ jobs:
         with:
           python-version: 3.9
       - name: Install deps
-        run: pdm install
+        run: pdm install --without benchmark
       - name: Restore pre-commit hooks
         uses: actions/cache@v4
         with:

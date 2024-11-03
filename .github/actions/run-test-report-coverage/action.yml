@@ -34,20 +34,20 @@ runs:
     - name: Install deps (CL)
       if: runner.os == 'windows'
       shell: bash
-      run: pdm install -v
+      run: pdm install --without benchmark -v
       env:
         WITH_COVERAGE: 1
     - name: Install deps (LLVM)
       if: matrix.os == 'macos'
       shell: bash
-      run: pdm install -v
+      run: pdm install --without benchmark -v
       env:
         WITH_COVERAGE: 1
         CC: clang
     - name: Install deps (GCC)
       if: runner.os == 'ubuntu'
       shell: bash
-      run: pdm install -v
+      run: pdm install --without benchmark -v
       env:
         WITH_COVERAGE: 1
         CC: gcc

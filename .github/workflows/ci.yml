@@ -26,11 +26,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Install python
-        uses: actions/setup-python@v5
-        id: setup-python
-        with:
-          python-version: ${{ matrix.python_version }}
       - name: Run test with report coverage
         uses: ./.github/actions/run-test-report-coverage
         with:
