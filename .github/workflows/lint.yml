@@ -20,22 +20,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Install python
-        uses: actions/setup-python@v5
-        id: setup-python
+      - name: Setup PDM
+        uses: pdm-project/setup-pdm@v4
         with:
           python-version: 3.9
-      - name: Restore PDM installation
-        id: pdm
-        uses: ./.github/actions/restore-pdm
-      - name: Restore lint cache
-        id: cache-pdm-lint
-        uses: actions/cache@v4
-        with:
-          path: ${{ steps.pdm.outputs.pdm-cache-dir }}
-          key: ${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-pdm-lint-${{ hashFiles('pyproject.toml', 'pdm.lock') }}
-      - name: Install lint deps
-        run: pdm install -G lint
+          cache: true
+      - name: Install deps
+        run: pdm install
       - name: Restore pre-commit hooks
         uses: actions/cache@v4
         with:
