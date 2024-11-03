@@ -5,6 +5,11 @@ inputs:
     required: true
     default: "2.18.1"
 
+  pdm-cache-tag:
+    description: "Tag will be added to cached PDM key"
+    required: true
+    default: ""
+
 outputs:
   pdm-cache-dir:
     description: "PDM cache directory"
@@ -24,7 +29,7 @@ runs:
       uses: actions/cache@v4
       with:
         path: ${{ steps.get-pip-cache-path.outputs.pip-cache-dir }}
-        key: ${{ runner.os }}-python-${{ steps.get-python-version.outputs.python-version }}-pdm-${{ inputs.pdm-version }}
+        key: ${{ runner.os }}${{ inputs.pdm-version }}-python-${{ steps.get-python-version.outputs.python-version }}-pdm-${{ inputs.pdm-version }}
     - name: Install PDM
       shell: bash
       run: pip install pdm==${{ inputs.pdm-version }}
