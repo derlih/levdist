@@ -10,24 +10,122 @@ on:
 
 permissions: {}
 
+env:
+  OPEN_CPP_COVERAGE_VERSION: 0.9.9.0
+
 jobs:
-  test:
+  test-ubuntu:
     permissions:
       contents: read
 
-    name: Unit tests
+    name: Unit tests (linux)
     strategy:
       matrix:
         python_version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
-        os: [ubuntu, macos, windows]
       fail-fast: true
-    runs-on: ${{ matrix.os }}-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Run test with report coverage
-        uses: ./.github/actions/run-test-report-coverage
+      - name: Setup PDM
+        uses: pdm-project/setup-pdm@v4
         with:
           python-version: ${{ matrix.python_version }}
-          codecov-token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Install deps
+        run: pdm install --without benchmark -v
+        env:
+          WITH_COVERAGE: 1
+          CC: gcc
+      - name: Run unit tests with coverage
+        run: pdm test-cov
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
+          files: ./coverage.xml
+          flags: OS-${{ runner.os }}-Python-${{ matrix.python_version }}
+
+  test-windows:
+    permissions:
+      contents: read
+
+    name: Unit tests (windows)
+    strategy:
+      matrix:
+        python_version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
+      fail-fast: true
+    runs-on: windows-latest
+
+    steps:
+      - name: Restore OpenCppCoverage installation
+        uses: actions/cache@v4
+        id: restore-open-cpp-coverage
+        with:
+          path: C:\Program Files\OpenCppCoverage
+          key: open-cpp-coverage-${{ env.OPEN_CPP_COVERAGE_VERSION }}
+      - name: Install OpenCppCoverage
+        if: steps.restore-open-cpp-coverage.outputs.cache-hit != 'true'
+        run: choco install OpenCppCoverage --version=${{ env.OPEN_CPP_COVERAGE_VERSION }} -y
+      - name: Add OpenCppCoverage to PATH
+        shell: pwsh
+        run: echo "C:\Program Files\OpenCppCoverage" >> $env:GITHUB_PATH
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup PDM
+        uses: pdm-project/setup-pdm@v4
+        with:
+          python-version: ${{ matrix.python_version }}
+      - name: Install deps
+        run: pdm install --without benchmark -v
+        env:
+          WITH_COVERAGE: 1
+      - name: Run unit tests with coverage
+        run: OpenCppCoverage --sources=src\levdist --modules=src\levdist --export_type=cobertura:native.xml --optimized_build  --cover_children  -- pdm test-cov
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
+          files: ./coverage.xml,./native.xml
+          flags: OS-${{ runner.os }}-Python-${{ matrix.python_version }}
+
+  test-mac:
+    permissions:
+      contents: read
+
+    name: Unit tests (macos)
+    strategy:
+      matrix:
+        python_version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
+      fail-fast: true
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup PDM
+        uses: pdm-project/setup-pdm@v4
+        with:
+          python-version: ${{ matrix.python_version }}
+      - name: Install deps
+        run: pdm install --without benchmark -v
+        env:
+          WITH_COVERAGE: 1
+          CC: clang
+      - name: Run unit tests with coverage
+        run: |
+          pdm test-cov
+          xcrun llvm-profdata merge -sparse coverage.profraw -o coverage.profdata
+          xcrun llvm-cov export --arch=arm64 --format=lcov --instr-profile=coverage.profdata src/levdist/native.*.so > coverage.lcov
+        env:
+          LLVM_PROFILE_FILE: coverage.profraw
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
+          files: ./coverage.xml
+          flags: OS-${{ runner.os }}-Python-${{ matrix.python_version }}
