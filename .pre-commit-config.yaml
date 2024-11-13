@@ -42,3 +42,8 @@ repos:
     rev: typos-dict-v0.11.35
     hooks:
     -   id: typos
+
+-   repo: https://github.com/woodruffw/zizmor
+    rev: v0.3.0
+    hooks:
+    - id: zizmor
