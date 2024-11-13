@@ -4,17 +4,17 @@ on:
   schedule:
     - cron: '0 0 * * 0'
 
-permissions:
-  contents: write
-  pull-requests: write
-
 jobs:
   dependencies-update:
+    permissions:
+      contents: write
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
+          persist-credentials: false
           ref: main
       - name: Setup PDM
         uses: pdm-project/setup-pdm@v4
