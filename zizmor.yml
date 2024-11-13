@@ -1,6 +1,6 @@
 rules:
   template-injection:
-    ignore: 
+    ignore:
       # steps.create-pr.outputs.pull-request-number
       - update-pre-commit.yml:43
       # steps.create-pr.outputs.pull-request-number
