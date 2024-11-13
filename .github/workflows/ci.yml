@@ -54,10 +54,10 @@ jobs:
         id: restore-open-cpp-coverage
         with:
           path: C:\Program Files\OpenCppCoverage
-          key: open-cpp-coverage-${{ env.OPEN_CPP_COVERAGE_VERSION }}
+          key: open-cpp-coverage-0.9.9.0
       - name: Install OpenCppCoverage
         if: steps.restore-open-cpp-coverage.outputs.cache-hit != 'true'
-        run: choco install OpenCppCoverage -y
+        run: choco install OpenCppCoverage --version=0.9.9.0 -y
       - name: Add OpenCppCoverage to PATH
         shell: pwsh
         run: echo "C:\Program Files\OpenCppCoverage" >> $env:GITHUB_PATH
