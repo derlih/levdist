@@ -1,7 +1,6 @@
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
 
-#include <stdlib.h>
 #include <vector>
 
 #define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
