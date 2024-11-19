@@ -34,6 +34,7 @@ jobs:
         run: pdm run cibuildwheel --output-dir dist
         env:
           CIBW_ARCHS_LINUX: auto aarch64 ppc64le s390x
+          CIBW_BUILD_VERBOSITY_LINUX: 3
       - name: Upload wheel artifact
         uses: actions/upload-artifact@v4
         with:
