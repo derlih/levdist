@@ -16,13 +16,13 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-13, macos-latest]
         include:
           - os: macos-13
-            build-arch: "*x86_64*"
+            build-arch: x86_64
           - os: macos-latest
-            build-arch: "*arm64*"
+            build-arch: arm64
           - os: ubuntu-latest
-            build-arch: "*"
+            build-arch: auto aarch64 ppc64le s390x
           - os: windows-latest
-            build-arch: "*"
+            build-arch: auto
       fail-fast: true
     runs-on: ${{ matrix.os }}
     steps:
@@ -44,10 +44,8 @@ jobs:
       - name: Build wheels
         run: pdm run cibuildwheel --output-dir dist
         env:
-          CIBW_ARCHS_LINUX: auto aarch64 ppc64le s390x
-          CIBW_ARCHS_MACOS: x86_64 arm64
           CIBW_SKIP: pp*
-          CIBW_BUILD: ${{ matrix.build-arch }}
+          CIBW_ARCHS: ${{ matrix.build-arch }}
           CIBW_BUILD_VERBOSITY: 3
   test-ubuntu:
     needs: build-wheels-and-test
