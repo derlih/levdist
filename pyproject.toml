@@ -65,4 +65,4 @@ publish = ["cibuildwheel>=2.21.3", "twine>=5.1.1"]
 
 [tool.cibuildwheel]
 test-requires = "pytest"
-test-command = "pytest"
+test-command = "pytest {project}/tests"
