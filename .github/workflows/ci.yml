@@ -18,7 +18,7 @@ jobs:
           - os: macos-13
             build-arch: x86_64
           - os: macos-latest
-            build-arch: arm64
+            build-arch: arm64 universal2
           - os: ubuntu-latest
             build-arch: auto aarch64 ppc64le s390x
           - os: windows-latest
