@@ -31,7 +31,7 @@ jobs:
         with:
           python-version: 3.12
       - name: Install deps
-        run: pdm install --group publish
+        run: pdm install --group publish --no-self
       - name: Build wheels
         run: pdm run cibuildwheel --output-dir dist
         env:
