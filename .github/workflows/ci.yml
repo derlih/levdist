@@ -16,9 +16,9 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-13, macos-latest]
         include:
           - os: macos-13
-            build-arch: x86_64
+            build-arch: "*x86_64*"
           - os: macos-latest
-            build-arch: arm64
+            build-arch: "*arm64*"
           - os: ubuntu-latest
             build-arch: "*"
           - os: windows-latest
