@@ -23,7 +23,7 @@ Homepage = "https://github.com/derlih/levdist"
 Issues = "https://github.com/derlih/levdist/issues"
 
 [build-system]
-requires = ["pdm-backend", "setuptools"]
+requires = ["pdm-backend", "setuptools<72.2.0"]
 build-backend = "pdm.backend"
 
 [tool.pdm]
