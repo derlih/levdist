@@ -23,7 +23,7 @@ Homepage = "https://github.com/derlih/levdist"
 Issues = "https://github.com/derlih/levdist/issues"
 
 [build-system]
-requires = ["pdm-backend", "setuptools"]
+requires = ["pdm-backend", "setuptools<72.2.0"]
 build-backend = "pdm.backend"
 
 [tool.pdm]
@@ -60,3 +60,7 @@ benchmark = [
 ]
 test = ["pytest>=8.3.4", "coverage>=7.6.1", "pytest-cov>=5.0.0"]
 lint = ["pre-commit>=3.5.0", "mypy>=1.13.0"]
+
+[tool.cibuildwheel]
+test-requires = "pytest"
+test-command = "pytest {project}/tests"
