@@ -28,8 +28,9 @@ jobs:
           persist-credentials: false
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.21.3
-        env:
-          CIBW_BUILD_VERBOSITY: 3
+        # For debugging purposes
+        # env:
+        #   CIBW_BUILD_VERBOSITY: 3
   test-ubuntu:
     needs: cibuildwheel
     permissions:
