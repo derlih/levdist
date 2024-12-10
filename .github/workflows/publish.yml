@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         python_version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
-        os: [macos-latest, windows-latest]
+        os: [macos-latest]
       fail-fast: true
     runs-on: ${{ matrix.os }}
     steps:
@@ -38,7 +38,7 @@ jobs:
       contents: read
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-latest, windows-latest]
         python-version: [cp39, cp310, cp311, cp312, cp313]
       fail-fast: true
     runs-on: ${{ matrix.os }}
