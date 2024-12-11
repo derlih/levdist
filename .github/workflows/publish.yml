@@ -102,7 +102,7 @@ jobs:
       - name: Publish to PyPI
         run: |
           twine upload --disable-progress-bar dist/*
-          twine upload wheels/*
+          twine upload --disable-progress-bar wheels/*
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
