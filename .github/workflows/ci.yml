@@ -7,40 +7,13 @@ on:
     branches:
       - "main"
 jobs:
-  cibuildwheel:
-    permissions:
-      contents: read
-    name: Build wheels
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-13, macos-14]
-        python-version: [pp39, pp310]
-      fail-fast: true
-    runs-on: ${{ matrix.os }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-      - name: Set up QEMU
-        if: runner.os == 'Linux'
-        uses: docker/setup-qemu-action@v3
-        with:
-          platforms: all
-      - name: Build wheels
-        uses: pypa/cibuildwheel@v2.21.3
-        env:
-          CIBW_BUILD: ${{ matrix.python-version }}-*
-          CIBW_ARCHS_LINUX: auto aarch64
-          # CIBW_BUILD_VERBOSITY: 3
   test-ubuntu:
-    needs: cibuildwheel
     permissions:
       contents: read
     name: Unit tests (linux)
     strategy:
       matrix:
-        python_version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+        python_version: ["3.9", "3.10", "3.11", "3.12", "3.13", "pypy3.9", "pypy3.10"]
       fail-fast: true
     runs-on: ubuntu-latest
     steps:
@@ -67,13 +40,12 @@ jobs:
           files: ./coverage.xml
           flags: OS-${{ runner.os }}-Python-${{ matrix.python_version }}
   test-windows:
-    needs: cibuildwheel
     permissions:
       contents: read
     name: Unit tests (windows)
     strategy:
       matrix:
-        python_version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+        python_version: ["3.9", "3.10", "3.11", "3.12", "3.13", "pypy3.9", "pypy3.10"]
       fail-fast: true
     runs-on: windows-latest
     steps:
@@ -111,13 +83,12 @@ jobs:
           files: ./coverage.xml,./native.xml
           flags: OS-${{ runner.os }}-Python-${{ matrix.python_version }}
   test-mac:
-    needs: cibuildwheel
     permissions:
       contents: read
     name: Unit tests (macos)
     strategy:
       matrix:
-        python_version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+        python_version: ["3.9", "3.10", "3.11", "3.12", "3.13", "pypy3.9", "pypy3.10"]
       fail-fast: true
     runs-on: macos-latest
     steps:
