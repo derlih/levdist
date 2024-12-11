@@ -5,8 +5,8 @@ on:
       - "v*.*.*"
 permissions: {}
 jobs:
-  cibuildwheel:
-    name: Build wheel package
+  cibuildwheel-cpython:
+    name: Build wheel package for CPython
     permissions:
       contents: read
     strategy:
@@ -36,12 +36,43 @@ jobs:
           name: dist-${{ matrix.os }}-${{ matrix.python-version }}
           path: wheelhouse/*
           retention-days: 1
+  cibuildwheel-pypy:
+    permissions:
+      contents: read
+    name: Build wheels for PyPy
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-13, macos-14]
+        python-version: [pp39, pp310]
+      fail-fast: true
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up QEMU
+        if: runner.os == 'Linux'
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: all
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.21.3
+        env:
+          CIBW_BUILD: ${{ matrix.python-version }}-*
+          CIBW_ARCHS_LINUX: auto aarch64
+      - name: Upload wheel artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-${{ matrix.os }}-${{ matrix.python-version }}
+          path: wheelhouse/*
+          retention-days: 1
   publish:
     name: Make release
     permissions:
       contents: write
     runs-on: ubuntu-latest
-    needs: [cibuildwheel]
+    needs: [cibuildwheel-cpython, cibuildwheel-pypy]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
