@@ -5,7 +5,7 @@
 groups = ["default", "benchmark", "lint", "test"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:4c570f2538c9a9213f59d98026493aeb155b77ad610dadd30bfdd638c674d435"
+content_hash = "sha256:f87689bcf69ca13a63f28becd49f4fe4e03ebbe965ad4713de8467e8384a778e"
 
 [[metadata.targets]]
 requires_python = ">=3.9"
@@ -255,7 +255,7 @@ name = "leven"
 version = "1.0.4"
 summary = "Levenshtein edit distance library"
 groups = ["benchmark"]
-marker = "python_version <= \"3.10\""
+marker = "python_version <= \"3.10\" and platform_python_implementation == \"CPython\""
 dependencies = [
     "nose",
     "six",
@@ -457,7 +457,7 @@ name = "nose"
 version = "1.3.7"
 summary = "nose extends unittest to make testing easier"
 groups = ["benchmark"]
-marker = "python_version <= \"3.10\""
+marker = "python_version <= \"3.10\" and platform_python_implementation == \"CPython\""
 files = [
     {file = "nose-1.3.7-py3-none-any.whl", hash = "sha256:9ff7c6cc443f8c51994b34a667bbcf45afd6d945be7477b52e97516fd17c53ac"},
     {file = "nose-1.3.7.tar.gz", hash = "sha256:f1bffef9cbc82628f6e7d7b40d7e255aefaa1adb6a1b1d26c69a8b79e6208a98"},
@@ -768,7 +768,7 @@ version = "1.17.0"
 requires_python = "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7"
 summary = "Python 2 and 3 compatibility utilities"
 groups = ["benchmark"]
-marker = "python_version <= \"3.10\""
+marker = "python_version <= \"3.10\" and platform_python_implementation == \"CPython\""
 files = [
     {file = "six-1.17.0-py2.py3-none-any.whl", hash = "sha256:4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274"},
     {file = "six-1.17.0.tar.gz", hash = "sha256:ff70335d468e7eb6ec65b95b99d3a2836546063f63acc5171de367e834932a81"},
