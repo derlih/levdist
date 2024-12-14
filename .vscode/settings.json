@@ -3,9 +3,5 @@
     "tests"
   ],
   "python.testing.unittestEnabled": false,
-  "python.testing.pytestEnabled": true,
-  "cSpell.words": [
-    "typer",
-    "кошка"
-  ]
+  "python.testing.pytestEnabled": true
 }
