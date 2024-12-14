@@ -44,3 +44,7 @@ repos:
     rev: v0.14.0
     hooks:
       - id: yamlfmt
+  - repo: https://github.com/streetsidesoftware/cspell-cli
+    rev: v8.16.1
+    hooks:
+      - id: cspell

@@ -1,0 +1,29 @@
+version: "0.2"
+language: 
+  - en
+  - ru
+ignorePaths: 
+  - pdm.lock
+  - .gitignore
+dictionaries: 
+  - en_us
+  - python
+  - python-common
+  - cpp
+words: 
+  - fcoverage
+  - levdist
+  - Erlikh
+  - nativemodule
+  - zizmor
+  - yamlfmt
+  - Levenstein
+  - кошка
+  - xcrun
+  - cibuildwheel
+  - choco
+  - pypa
+  - CIBW
+  - ARCHS
+  - pwsh
+
