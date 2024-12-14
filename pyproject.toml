@@ -10,7 +10,10 @@ license = { text = "MIT" }
 keywords = ["levenstein", "edit distance"]
 classifiers = [
     "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: MIT License",
     "Typing :: Typed",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -55,7 +58,7 @@ benchmark = [
     "pylev>=1.4.0",
     "Levenshtein>=0.25.1",
     "python-Levenshtein>=0.25.1",
-    "leven>=1.0.4; python_version <= \"3.10\"",
+    "leven>=1.0.4; python_version <= \"3.10\" and python_implementation == \"CPython\"",
     "typer>=0.15.1",
 ]
 test = ["pytest>=8.3.4", "coverage>=7.6.1", "pytest-cov>=5.0.0"]
