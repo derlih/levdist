@@ -1,16 +1,16 @@
 version: "0.2"
-language: 
+language:
   - en
   - ru
-ignorePaths: 
+ignorePaths:
   - pdm.lock
   - .gitignore
-dictionaries: 
+dictionaries:
   - en_us
   - python
   - python-common
   - cpp
-words: 
+words:
   - fcoverage
   - levdist
   - Erlikh
@@ -26,4 +26,3 @@ words:
   - CIBW
   - ARCHS
   - pwsh
-
