@@ -38,6 +38,7 @@ branch = true
 omit = ["tests", "__init__.py"]
 
 
+
 [tool.pdm]
 distribution = true
 
@@ -69,7 +70,7 @@ test = [
 ]
 lint = [
     "pre-commit>=4.0.1",
-    "mypy>=1.13.0",
+    "mypy>=1.14.0",
 ]
 
 [tool.cibuildwheel]
