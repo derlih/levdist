@@ -43,6 +43,7 @@ omit = ["tests", "__init__.py"]
 
 
 
+
 [tool.pdm]
 distribution = true
 
@@ -73,7 +74,7 @@ test = [
     "pytest-cov>=6.0.0",
 ]
 lint = [
-    "pre-commit>=4.0.1",
+    "pre-commit>=4.1.0",
     "mypy>=1.14.1",
 ]
 
