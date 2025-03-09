@@ -49,6 +49,7 @@ omit = ["tests", "__init__.py"]
 
 
 
+
 [tool.pdm]
 distribution = true
 
@@ -68,13 +69,13 @@ test-cov.composite = ["pytest --cov src", "python -m coverage xml"]
 [dependency-groups]
 benchmark = [
     "pylev>=1.4.0",
-    "Levenshtein>=0.26.1",
-    "python-Levenshtein>=0.26.1",
+    "Levenshtein>=0.27.1",
+    "python-Levenshtein>=0.27.1",
     "leven>=1.0.4; python_version <= \"3.10\" and platform_python_implementation == \"CPython\"",
     "typer>=0.15.2",
 ]
 test = [
-    "pytest>=8.3.4",
+    "pytest>=8.3.5",
     "coverage>=7.6.12",
     "pytest-cov>=6.0.0",
 ]
