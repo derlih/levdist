@@ -51,6 +51,7 @@ omit = ["tests", "__init__.py"]
 
 
 
+
 [tool.pdm]
 distribution = true
 
@@ -77,11 +78,11 @@ benchmark = [
 ]
 test = [
     "pytest>=8.3.5",
-    "coverage>=7.6.12",
+    "coverage>=7.7.1",
     "pytest-cov>=6.0.0",
 ]
 lint = [
-    "pre-commit>=4.1.0",
+    "pre-commit>=4.2.0",
     "mypy>=1.15.0",
 ]
 
