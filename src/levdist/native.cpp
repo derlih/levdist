@@ -45,7 +45,7 @@ static PyObject *method_wagner_fischer(PyObject *self, PyObject *args) {
   PyObject *b;
 
   if (!PyArg_ParseTuple(args, "UU", &a, &b)) {
-    PyErr_SetString(PyExc_ValueError, "Can't parse arguments");
+    PyErr_SetString(PyExc_TypeError, "Can't parse arguments");
     return NULL;
   }
 
