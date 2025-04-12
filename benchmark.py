@@ -1,8 +1,10 @@
+# noqa: D100
 import platform
 import sys
 from dataclasses import dataclass
 from enum import Enum
 from timeit import timeit
+from typing import Annotated
 
 import typer
 
@@ -24,7 +26,7 @@ DISTANCE = levenshtein(S1, S2)
 
 
 @dataclass(frozen=True)
-class PackageToTest:
+class PackageToTest:  # noqa: D101
     name: str
     pypi: str
     setup: str
@@ -65,21 +67,21 @@ if LEVEN_PRESENT:
             "https://pypi.org/project/leven/",
             "from leven import levenshtein",
             f"levenshtein('{S1}', '{S2}')",
-        )
+        ),
     )
 
 
-class OutputFormat(str, Enum):
+class OutputFormat(str, Enum):  # noqa: D101
     TEXT = "txt"
     MARKDOWN = "md"
 
 
-def benchmark(pkg: PackageToTest) -> float:
-    exec(
+def benchmark(pkg: PackageToTest) -> float:  # noqa: D103
+    exec(  # noqa: S102
         f"""
 {pkg.setup}
 assert {pkg.call} == {DISTANCE}
-             """
+             """,
     )
 
     result = timeit(
@@ -91,24 +93,29 @@ assert {pkg.call} == {DISTANCE}
     return result / ITERATIONS
 
 
-def main(
-    output: typer.FileTextWrite = typer.Argument(sys.stdout),
-    format: OutputFormat = typer.Option(OutputFormat.TEXT),
+def main(  # noqa: D103
+    output: Annotated[
+        typer.FileTextWrite,
+        typer.Argument(help="Path to the result file. By default prints to STDOUT."),
+    ] = sys.stdout,
+    fmt: Annotated[OutputFormat, typer.Option("--format")] = OutputFormat.TEXT,
 ) -> None:
     with typer.progressbar(PACKAGES) as pkgs:
-        results = tuple((benchmark(pkg) for pkg in pkgs))
+        results = tuple(benchmark(pkg) for pkg in pkgs)
 
-    if format == OutputFormat.TEXT:
+    if fmt == OutputFormat.TEXT:
         for pkg, duration in zip(PACKAGES, results):
             typer.echo(f"{pkg.name} ({pkg.pypi}): {duration} sec", output)
-    elif format == OutputFormat.MARKDOWN:
+    elif fmt == OutputFormat.MARKDOWN:
         typer.echo(f"# Benchmark ({ITERATIONS} iterations)", output)
         typer.echo(file=output)
 
         typer.echo("| OS | CPU | Python |", output)
         typer.echo("| -- | --- | ------ |", output)
         typer.echo(
-            f"| {platform.system()} {platform.release()} | {platform.processor()} | {sys.version} |",
+            f"| {platform.system()} {platform.release()} "
+            f"| {platform.processor()} "
+            f"| {sys.version} |",
             output,
         )
         typer.echo(

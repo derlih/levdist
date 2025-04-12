@@ -1,10 +1,8 @@
 from typing import Callable
 
 import pytest
-
-from levdist.classic import classic
+from levdist import classic, levenshtein, wagner_fischer
 from levdist.native import wagner_fischer_native
-from levdist.wagner_fischer import wagner_fischer
 
 
 @pytest.mark.parametrize(
@@ -22,6 +20,14 @@ from levdist.wagner_fischer import wagner_fischer
         pytest.param("🏉", "a", 1, id="Strings with different kind"),
     ],
 )
-@pytest.mark.parametrize("fn", [classic, wagner_fischer, wagner_fischer_native])
-def test_distance(a: str, b: str, distance: int, fn: Callable[[str, str], int]):
+@pytest.mark.parametrize(
+    "fn",
+    [
+        pytest.param(classic, id="classic"),
+        pytest.param(wagner_fischer, id="wagner_fischer"),
+        pytest.param(wagner_fischer_native, id="native"),
+        pytest.param(levenshtein, id="levenshtein"),
+    ],
+)
+def test_distance(a: str, b: str, distance: int, fn: Callable[[str, str], int]) -> None:
     assert fn(a, b) == distance

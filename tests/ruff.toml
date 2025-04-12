@@ -1,0 +1,9 @@
+extend = "../pyproject.toml"
+
+
+[lint]
+ignore = [
+  "S101", # Use of `assert` detected
+  "D103", # Missing docstring in public function"
+  "D100", # Missing docstring in public module
+]
