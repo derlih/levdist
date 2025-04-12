@@ -10,24 +10,12 @@ repos:
       - id: check-toml
       - id: check-added-large-files
       - id: debug-statements
-  - repo: https://github.com/psf/black
-    rev: 25.1.0
-    hooks:
-      - id: black
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.11.5
     hooks:
       - id: ruff
         args: [--fix]
-  - repo: https://github.com/pycqa/isort
-    rev: 6.0.1
-    hooks:
-      - id: isort
-        args: [--profile, black]
-  - repo: https://github.com/aio-libs/sort-all
-    rev: v1.3.0
-    hooks:
-      - id: sort-all
+      - id: ruff-format
   - repo: https://github.com/pre-commit/mirrors-clang-format
     rev: v20.1.0
     hooks:

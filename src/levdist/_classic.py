@@ -1,4 +1,14 @@
 def classic(a: str, b: str) -> int:
+    """Classic implementation of Levenshtein distance.
+
+    Args:
+        a (str): First string
+        b (str): Second string
+
+    Returns:
+        int: Edit distance
+
+    """
     if not a:
         return len(b)
     if not b:

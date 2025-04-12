@@ -22,7 +22,7 @@ COVERAGE_FLAGS = {
 }
 
 
-def pdm_build_hook_enabled(context: Context) -> None:
+def pdm_build_hook_enabled(context: Context) -> bool:
     return context.target in ("wheel", "editable")
 
 

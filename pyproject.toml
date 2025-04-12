@@ -37,7 +37,6 @@ exclude = ["tests"]
 branch = true
 omit = ["tests", "__init__.py"]
 
-
 [tool.pdm]
 distribution = true
 
@@ -70,3 +69,15 @@ lint = ["pre-commit>=4.2.0", "mypy>=1.15.0"]
 [tool.cibuildwheel]
 test-requires = "pytest"
 test-command = "pytest {project}/tests"
+
+[tool.ruff]
+line-length = 88
+indent-width = 4
+# Must be in sync with `requires-python` in this file
+target-version = "py39"
+
+extend-exclude = ["pdm_build.py"]
+
+[tool.ruff.lint]
+select = ["ALL"]
+fixable = ["ALL"]
