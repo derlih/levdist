@@ -96,7 +96,8 @@ static PyObject *method_wagner_fischer(PyObject *self, PyObject *args) {
 }
 
 static PyMethodDef NativeMethods[] = {
-    {"wagner_fischer_native", method_wagner_fischer, METH_VARARGS, "Native C++ implementation of Wagner-Fisher algorithm"},
+    {"wagner_fischer_native", method_wagner_fischer, METH_VARARGS,
+     "Native C++ implementation of Wagner-Fisher algorithm"},
     {NULL, NULL, 0, NULL}};
 
 static struct PyModuleDef nativemodule = {PyModuleDef_HEAD_INIT, "native", NULL,
