@@ -50,6 +50,12 @@ PACKAGES = [
         "from pylev import levenshtein",
         f"levenshtein('{S1}', '{S2}')",
     ),
+    PackageToTest(
+        "editdistance",
+        "https://pypi.org/project/editdistance/",
+        "import editdistance",
+        f"editdistance.eval('{S1}', '{S2}')",
+    ),
 ]
 
 if LEVEN_PRESENT:
