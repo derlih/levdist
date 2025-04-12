@@ -67,7 +67,7 @@ test = ["pytest>=8.3.5", "coverage>=7.8.0", "pytest-cov>=6.1.1"]
 lint = ["pre-commit>=4.2.0", "mypy>=1.15.0"]
 
 [tool.cibuildwheel]
-test-requires = "pytest"
+test-groups = ["test"]
 test-command = "pytest {project}/tests"
 
 [tool.ruff]
