@@ -36,3 +36,4 @@ repos:
     rev: v8.17.3
     hooks:
       - id: cspell
+        exclude: .vscode
