@@ -1,4 +1,7 @@
-"""`levdist` package contains an edit distance functionality."""
+"""`levdist` package contains an edit distance functionality.
+
+More information about the algorithm you can find [here](https://en.wikipedia.org/wiki/Levenshtein_distance).
+"""
 
 import typing
 
