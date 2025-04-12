@@ -5,6 +5,8 @@
     "ms-python.python",
     "charliermarsh.ruff",
     "njpwerner.autodocstring",
-    "ms-vscode.cpptools-extension-pack"
+    "ms-vscode.cpptools-extension-pack",
+    "xaver.clang-format",
+    "streetsidesoftware.code-spell-checker"
   ]
 }
