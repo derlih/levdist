@@ -5,7 +5,7 @@
 groups = ["default", "benchmark", "lint", "test"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:f28ffb92cbae324c8062901403ddc70f7c544b5300bd115325952e4671b72704"
+content_hash = "sha256:d57b63c5c60b22e86795b81b3ffc2b6d0935204d033969eeb39505c5061ab152"
 
 [[metadata.targets]]
 requires_python = ">=3.9"
@@ -292,6 +292,17 @@ groups = ["lint"]
 files = [
     {file = "filelock-3.18.0-py3-none-any.whl", hash = "sha256:c401f4f8377c4464e6db25fff06205fd89bdd83b65eb0488ed1b160f780e21de"},
     {file = "filelock-3.18.0.tar.gz", hash = "sha256:adbc88eabb99d2fec8c9c1b229b171f18afa655400173ddc653d5d01501fb9f2"},
+]
+
+[[package]]
+name = "humanize"
+version = "4.12.2"
+requires_python = ">=3.9"
+summary = "Python humanize utilities"
+groups = ["benchmark"]
+files = [
+    {file = "humanize-4.12.2-py3-none-any.whl", hash = "sha256:e4e44dced598b7e03487f3b1c6fd5b1146c30ea55a110e71d5d4bca3e094259e"},
+    {file = "humanize-4.12.2.tar.gz", hash = "sha256:ce0715740e9caacc982bb89098182cf8ded3552693a433311c6a4ce6f4e12a2c"},
 ]
 
 [[package]]

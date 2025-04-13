@@ -2,11 +2,14 @@
 import platform
 import sys
 from dataclasses import dataclass
-from enum import Enum
+from pathlib import Path
 from timeit import timeit
-from typing import Annotated
 
+import humanize
 import typer
+from rich.console import Console
+from rich.progress import track
+from rich.table import Table
 
 from levdist import levenshtein
 
@@ -71,11 +74,6 @@ if LEVEN_PRESENT:
     )
 
 
-class OutputFormat(str, Enum):  # noqa: D101
-    TEXT = "txt"
-    MARKDOWN = "md"
-
-
 def benchmark(pkg: PackageToTest) -> float:  # noqa: D103
     exec(  # noqa: S102
         f"""
@@ -93,21 +91,42 @@ assert {pkg.call} == {DISTANCE}
     return result / ITERATIONS
 
 
-def main(  # noqa: D103
-    output: Annotated[
-        typer.FileTextWrite,
-        typer.Argument(help="Path to the result file. By default prints to STDOUT."),
-    ] = sys.stdout,
-    fmt: Annotated[OutputFormat, typer.Option("--format")] = OutputFormat.TEXT,
-) -> None:
-    with typer.progressbar(PACKAGES) as pkgs:
-        results = tuple(benchmark(pkg) for pkg in pkgs)
+app = typer.Typer()
 
-    if fmt == OutputFormat.TEXT:
-        for pkg, duration in zip(PACKAGES, results):
-            typer.echo(f"{pkg.name} ({pkg.pypi}): {duration} sec", output)
-    elif fmt == OutputFormat.MARKDOWN:
-        typer.echo(f"# Benchmark ({ITERATIONS} iterations)", output)
+
+@app.command()
+def console() -> None:
+    """Benchmarks and prints result to the standard output."""
+    results = tuple(
+        (pkg, benchmark(pkg))
+        for pkg in track(PACKAGES, description="Running benchmarks")
+    )
+
+    iterations_humanized = humanize.intword(ITERATIONS)
+    table = Table(title=f"Benchmark ({iterations_humanized} iterations)")
+    table.add_column("Package")
+    table.add_column("Duration")
+
+    for pkg, duration in results:
+        duration_humanized = humanize.metric(duration, "s")
+        table.add_row(f"{pkg.name} ({pkg.pypi})", duration_humanized)
+
+    console = Console()
+    console.print(table)
+
+
+@app.command()
+def markdown() -> None:
+    """Benchmarks and writes MarkDown table to the output."""
+    results = tuple(
+        (pkg, benchmark(pkg))
+        for pkg in track(PACKAGES, description="Running benchmarks")
+    )
+
+    benchmark_path = Path("BENCHMARK.md")
+    with benchmark_path.open("w") as output:
+        iterations_humanized = humanize.intword(ITERATIONS)
+        typer.echo(f"# Benchmark ({iterations_humanized} iterations)", output)
         typer.echo(file=output)
 
         typer.echo("| OS | CPU | Python |", output)
@@ -120,13 +139,13 @@ def main(  # noqa: D103
         )
         typer.echo(
             """
-| Package | Duration of one iteration (sec) |
-| ------- | ------------------------- |""",
+    | Package | Duration of one iteration (s) |
+    | ------- | ------------------------- |""",
             output,
         )
-        for pkg, duration in zip(PACKAGES, results):
+        for pkg, duration in results:
             typer.echo(f"| [{pkg.name}]({pkg.pypi}) | {duration} |", output)
 
 
 if __name__ == "__main__":
-    typer.run(main)
+    app()

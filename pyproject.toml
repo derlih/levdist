@@ -38,6 +38,8 @@ branch = true
 omit = ["tests", "__init__.py"]
 
 
+
+
 [tool.pdm]
 distribution = true
 
@@ -62,6 +64,8 @@ benchmark = [
     "leven>=1.0.4; python_version <= \"3.10\" and platform_python_implementation == \"CPython\"",
     "editdistance>=0.8.1",
     "typer>=0.15.2",
+    "humanize>=4.12.2",
+    "rich>=14.0.0",
 ]
 test = [
     "pytest>=8.3.5",
