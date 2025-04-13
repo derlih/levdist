@@ -39,6 +39,7 @@ omit = ["tests", "__init__.py"]
 
 
 
+
 [tool.pdm]
 distribution = true
 
@@ -64,6 +65,7 @@ benchmark = [
     "editdistance>=0.8.1",
     "typer>=0.15.2",
     "humanize>=4.12.2",
+    "rich>=14.0.0",
 ]
 test = [
     "pytest>=8.3.5",
