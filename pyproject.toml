@@ -44,6 +44,7 @@ omit = ["tests", "__init__.py"]
 
 
 
+
 [tool.pdm]
 distribution = true
 
@@ -67,7 +68,7 @@ benchmark = [
     "python-Levenshtein>=0.27.1",
     "leven>=1.0.4; python_version <= \"3.10\" and platform_python_implementation == \"CPython\"",
     "editdistance>=0.8.1",
-    "typer>=0.15.3",
+    "typer>=0.15.4",
     "humanize>=4.12.3",
     "rich>=14.0.0",
 ]
