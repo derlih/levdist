@@ -23,14 +23,14 @@ def test_native_wrong_arguments(params: Any) -> None:  # noqa: ANN401
 
 def test_native_no_mem_leak() -> None:
     # Warm up
-    wagner_fischer_native("dog", "cat")
+    wagner_fischer_native("a-dog", "cat-b")
 
     process = psutil.Process()
     gc.collect()
 
     before = process.memory_info().rss
 
-    for i in range(1_000_000):
+    for i in range(10_000_000):
         wagner_fischer_native(f"{i}-dog", "cat-{i}")
 
     gc.collect()
