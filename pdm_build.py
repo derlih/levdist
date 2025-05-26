@@ -11,6 +11,15 @@ class Compiler(str, Enum):
     GCC = "gcc"
     MSVC = "msvc"
 
+BUILD_FLAGS = {
+    Compiler.CLANG: [
+        "-std=c++20",
+    ],
+    Compiler.GCC: [
+    ],
+    Compiler.MSVC: [
+    ],
+}
 
 COVERAGE_FLAGS = {
     Compiler.CLANG: [
@@ -33,10 +42,12 @@ def pdm_build_update_setup_kwargs(
         "src/levdist/native.cpp",
     ]
 
+    compiler = _get_compiler()
+    extra_compile_args = BUILD_FLAGS.get(compiler, [])
+
     if os.environ.get("WITH_COVERAGE") is not None:
-        extra_compile_args = COVERAGE_FLAGS.get(_get_compiler(), [])
-    else:
-        extra_compile_args = []
+        extra_compile_args.extend(COVERAGE_FLAGS.get(_get_compiler(), []))
+
 
     setup_kwargs.update(
         ext_modules=[
