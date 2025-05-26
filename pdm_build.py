@@ -13,7 +13,7 @@ class Compiler(str, Enum):
 
 BUILD_FLAGS = {
     Compiler.CLANG: [
-        "-std=c++23",
+        "-std=c++20",
     ],
     Compiler.GCC: [
     ],
