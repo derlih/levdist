@@ -6,10 +6,21 @@
 
 #define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
 
+template <typename T> class PyAllocator {
+public:
+  typedef T value_type;
+  // Constructor
+  PyAllocator() noexcept {}
+  // Allocate memory for n objects of type T
+  T *allocate(std::size_t n) { return PyMem_New(T, n); }
+  // Deallocate memory
+  void deallocate(T *p, std::size_t n) noexcept { PyMem_Del(p); }
+};
+
 template <typename CharT>
 Py_ssize_t calc_distance(CharT *data_a, Py_ssize_t len_a, CharT *data_b,
                          Py_ssize_t len_b) {
-  std::vector<Py_ssize_t> v(2 * (len_b + 1));
+  std::vector<Py_ssize_t, PyAllocator<Py_ssize_t>> v(2 * (len_b + 1));
   Py_ssize_t *v0 = v.data();
   Py_ssize_t *v1 = v0 + len_b + 1;
 
@@ -82,12 +93,12 @@ static PyObject *method_wagner_fischer(PyObject *self, PyObject *args) {
   }
 
   void *data_a = PyUnicode_DATA(a);
-  std::vector<Py_UCS4> converted_a(len_a);
+  std::vector<Py_UCS4, PyAllocator<Py_UCS4>> converted_a(len_a);
   for (Py_ssize_t i = 0; i < len_a; ++i) {
     converted_a[i] = PyUnicode_READ(kind_a, data_a, i);
   }
   void *data_b = PyUnicode_DATA(b);
-  std::vector<Py_UCS4> converted_b(len_b);
+  std::vector<Py_UCS4, PyAllocator<Py_UCS4>> converted_b(len_b);
   for (Py_ssize_t i = 0; i < len_b; ++i) {
     converted_b[i] = PyUnicode_READ(kind_b, data_b, i);
   }
