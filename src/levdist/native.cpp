@@ -17,10 +17,15 @@ public:
   void deallocate(T *p, std::size_t n) noexcept { PyMem_Del(p); }
 };
 
+// clang-format off
+// MacOS compiler doesn't like ">>" in template alias
+template <typename T> using Vector = std::vector<T, PyAllocator<T> >;
+// clang-format on
+
 template <typename CharT>
 Py_ssize_t calc_distance(CharT *data_a, Py_ssize_t len_a, CharT *data_b,
                          Py_ssize_t len_b) {
-  std::vector<Py_ssize_t, PyAllocator<Py_ssize_t>> v(2 * (len_b + 1));
+  Vector<Py_ssize_t> v(2 * (len_b + 1));
   Py_ssize_t *v0 = v.data();
   Py_ssize_t *v1 = v0 + len_b + 1;
 
@@ -93,12 +98,12 @@ static PyObject *method_wagner_fischer(PyObject *self, PyObject *args) {
   }
 
   void *data_a = PyUnicode_DATA(a);
-  std::vector<Py_UCS4, PyAllocator<Py_UCS4>> converted_a(len_a);
+  Vector<Py_UCS4> converted_a(len_a);
   for (Py_ssize_t i = 0; i < len_a; ++i) {
     converted_a[i] = PyUnicode_READ(kind_a, data_a, i);
   }
   void *data_b = PyUnicode_DATA(b);
-  std::vector<Py_UCS4, PyAllocator<Py_UCS4>> converted_b(len_b);
+  Vector<Py_UCS4> converted_b(len_b);
   for (Py_ssize_t i = 0; i < len_b; ++i) {
     converted_b[i] = PyUnicode_READ(kind_b, data_b, i);
   }
