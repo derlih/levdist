@@ -38,14 +38,6 @@ branch = true
 omit = ["tests", "__init__.py"]
 
 
-
-
-
-
-
-
-
-
 [tool.pdm]
 distribution = true
 
@@ -77,11 +69,9 @@ test = [
     "pytest>=8.3.5",
     "coverage>=7.8.2",
     "pytest-cov>=6.1.1",
+    "psutil>=7.0.0",
 ]
-lint = [
-    "pre-commit>=4.2.0",
-    "mypy>=1.15.0",
-]
+lint = ["pre-commit>=4.2.0", "mypy>=1.15.0"]
 
 [tool.cibuildwheel]
 test-groups = ["test"]

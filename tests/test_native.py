@@ -1,5 +1,7 @@
+import gc
 from typing import Any
 
+import psutil
 import pytest
 from levdist.native import wagner_fischer_native
 
@@ -17,3 +19,21 @@ from levdist.native import wagner_fischer_native
 def test_native_wrong_arguments(params: Any) -> None:  # noqa: ANN401
     with pytest.raises(TypeError):
         wagner_fischer_native(*params)
+
+
+def test_native_no_mem_leak() -> None:
+    # Warm up
+    wagner_fischer_native("dog", "cat")
+
+    process = psutil.Process()
+    gc.collect()
+
+    before = process.memory_info().rss
+
+    for i in range(1000):
+        wagner_fischer_native(f"{i}-dog", "cat-{i}")
+
+    gc.collect()
+    after = process.memory_info().rss
+
+    assert after == before
