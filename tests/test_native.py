@@ -30,7 +30,7 @@ def test_native_no_mem_leak() -> None:
 
     before = process.memory_info().rss
 
-    for i in range(1000):
+    for i in range(1_000_000):
         wagner_fischer_native(f"{i}-dog", "cat-{i}")
 
     gc.collect()
