@@ -38,6 +38,7 @@ branch = true
 omit = ["tests", "__init__.py"]
 
 
+
 [tool.pdm]
 distribution = true
 
@@ -61,7 +62,7 @@ benchmark = [
     "python-Levenshtein>=0.27.1",
     "leven>=1.0.4; python_version <= \"3.10\" and platform_python_implementation == \"CPython\"",
     "editdistance>=0.8.1",
-    "typer>=0.15.4",
+    "typer>=0.16.0",
     "humanize>=4.12.3",
     "rich>=14.0.0",
 ]
@@ -71,7 +72,10 @@ test = [
     "pytest-cov>=6.1.1",
     "psutil>=7.0.0",
 ]
-lint = ["pre-commit>=4.2.0", "mypy>=1.15.0"]
+lint = [
+    "pre-commit>=4.2.0",
+    "mypy>=1.16.0",
+]
 
 [tool.cibuildwheel]
 test-groups = ["test"]
