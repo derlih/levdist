@@ -25,6 +25,7 @@ jobs:
         uses: pdm-project/setup-pdm@v4
         with:
           python-version: ${{ matrix.python_version }}
+          cache: true
       - name: Install deps
         run: pdm install --without benchmark -v
         env:
@@ -69,6 +70,7 @@ jobs:
         uses: pdm-project/setup-pdm@v4
         with:
           python-version: ${{ matrix.python_version }}
+          cache: true
       - name: Install deps
         run: pdm install --without benchmark -v
         env:
@@ -100,6 +102,7 @@ jobs:
         uses: pdm-project/setup-pdm@v4
         with:
           python-version: ${{ matrix.python_version }}
+          cache: true
       - name: Install deps
         run: pdm install --without benchmark -v
         env:

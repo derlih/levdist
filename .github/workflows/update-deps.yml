@@ -18,6 +18,7 @@ jobs:
         uses: pdm-project/setup-pdm@v4
         with:
           python-version: 3.9
+          cache: true
       - name: Update dependencies
         run: pdm update --update-all --unconstrained
       - name: Create Pull Request

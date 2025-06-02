@@ -82,6 +82,7 @@ jobs:
         uses: pdm-project/setup-pdm@v4
         with:
           python-version: 3.9
+          cache: true
       - name: Install twine
         run: pip install twine
       - name: Build sdist
