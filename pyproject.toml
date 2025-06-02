@@ -37,8 +37,6 @@ exclude = ["tests"]
 branch = true
 omit = ["tests", "__init__.py"]
 
-
-
 [tool.pdm]
 distribution = true
 
@@ -72,10 +70,7 @@ test = [
     "pytest-cov>=6.1.1",
     "psutil>=7.0.0",
 ]
-lint = [
-    "pre-commit>=4.2.0",
-    "mypy>=1.16.0",
-]
+lint = ["pre-commit>=4.2.0", "mypy>=1.16.0"]
 
 [tool.cibuildwheel]
 test-groups = ["test"]
