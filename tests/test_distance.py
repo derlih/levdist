@@ -1,6 +1,6 @@
 import pytest
 from levdist import LevenshteinFn, classic, levenshtein, wagner_fischer
-from levdist.native import wagner_fischer_native
+from levdist._native import wagner_fischer_native
 
 ALL_LEVENSHTEIN_FUNCTION_PYTEST_PARAMS = (
     pytest.param(classic, id="classic"),

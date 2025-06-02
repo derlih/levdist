@@ -127,4 +127,4 @@ static PyMethodDef NativeMethods[] = {
 static struct PyModuleDef nativemodule = {PyModuleDef_HEAD_INIT, "native", NULL,
                                           -1, NativeMethods};
 
-PyMODINIT_FUNC PyInit_native(void) { return PyModule_Create(&nativemodule); }
+PyMODINIT_FUNC PyInit__native(void) { return PyModule_Create(&nativemodule); }

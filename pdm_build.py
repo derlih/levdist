@@ -39,7 +39,7 @@ def pdm_build_update_setup_kwargs(
     context: Context, setup_kwargs: Dict[str, Any]
 ) -> None:
     sources = [
-        "src/levdist/native.cpp",
+        "src/levdist/_native.cpp",
     ]
 
     compiler = _get_compiler()
@@ -52,7 +52,7 @@ def pdm_build_update_setup_kwargs(
     setup_kwargs.update(
         ext_modules=[
             Extension(
-                name="levdist.native",
+                name="levdist._native",
                 sources=sources,
                 extra_compile_args=extra_compile_args,
                 extra_link_args=extra_compile_args,

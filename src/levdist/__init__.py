@@ -14,7 +14,7 @@ if typing.TYPE_CHECKING:
     levenshtein: LevenshteinFn
 
 try:
-    from .native import wagner_fischer_native
+    from ._native import wagner_fischer_native
 
     levenshtein = wagner_fischer_native
 except ImportError:
