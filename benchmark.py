@@ -139,8 +139,8 @@ def markdown() -> None:
         )
         typer.echo(
             """
-    | Package | Duration of one iteration (s) |
-    | ------- | ------------------------- |""",
+| Package | Duration of one iteration (s) |
+| ------- | ------------------------- |""",
             output,
         )
         for pkg, duration in results:
