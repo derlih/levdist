@@ -12,14 +12,16 @@ The implementation is based on code samples from [Levenstein Wiki](https://en.wi
 
 ## Installation
 
-`pip install levdist`
+```
+pip install levdist
+```
 
 ## Usage
 
 ```python
 from levdist import levenshtein
 
-distance = levenstein("dog", "cat")
+distance = levenshtein("dog", "cat")
 ```
 
 ## Development
@@ -47,7 +49,7 @@ In addition to that you can lint your code using `pdm lint` and check the typing
 Each PR run GitHub actions for all actual Python versions to check if native extension is built and tests pass.
 Also formatting and typing will be checked.
 
-The coverage is published to CodeCov.
+The coverage is published to [CodeCov](https://app.codecov.io/gh/derlih/levdist).
 
 ##### Dependency updates
 
