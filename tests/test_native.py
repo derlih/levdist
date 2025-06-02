@@ -3,7 +3,7 @@ from typing import Any
 
 import psutil
 import pytest
-from levdist.native import wagner_fischer_native
+from levdist._native import wagner_fischer_native
 
 
 @pytest.mark.parametrize(

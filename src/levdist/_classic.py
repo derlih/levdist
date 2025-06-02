@@ -1,5 +1,5 @@
 def classic(a: str, b: str) -> int:
-    """Classic implementation of Levenshtein distance.
+    """Calculate edit distance using a slow (classic) algorithm.
 
     Args:
         a (str): First string

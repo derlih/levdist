@@ -11,17 +11,17 @@ repos:
       - id: check-added-large-files
       - id: debug-statements
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.11.5
+    rev: v0.11.12
     hooks:
       - id: ruff
         args: [--fix]
       - id: ruff-format
   - repo: https://github.com/pre-commit/mirrors-clang-format
-    rev: v20.1.0
+    rev: v20.1.5
     hooks:
       - id: clang-format
   - repo: https://github.com/crate-ci/typos
-    rev: v1.31.1
+    rev: v1.32.0
     hooks:
       - id: typos
   - repo: https://github.com/woodruffw/zizmor
@@ -29,11 +29,11 @@ repos:
     hooks:
       - id: zizmor
   - repo: https://github.com/google/yamlfmt
-    rev: v0.16.0
+    rev: v0.17.0
     hooks:
       - id: yamlfmt
   - repo: https://github.com/streetsidesoftware/cspell-cli
-    rev: v8.17.3
+    rev: v9.0.1
     hooks:
       - id: cspell
         exclude: .vscode

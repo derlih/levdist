@@ -1,8 +1,13 @@
-from typing import Callable
-
 import pytest
-from levdist import classic, levenshtein, wagner_fischer
-from levdist.native import wagner_fischer_native
+from levdist import LevenshteinFn, classic, levenshtein, wagner_fischer
+from levdist._native import wagner_fischer_native
+
+ALL_LEVENSHTEIN_FUNCTION_PYTEST_PARAMS = (
+    pytest.param(classic, id="classic"),
+    pytest.param(wagner_fischer, id="wagner_fischer"),
+    pytest.param(wagner_fischer_native, id="native"),
+    pytest.param(levenshtein, id="levenshtein"),
+)
 
 
 @pytest.mark.parametrize(
@@ -22,12 +27,7 @@ from levdist.native import wagner_fischer_native
 )
 @pytest.mark.parametrize(
     "fn",
-    [
-        pytest.param(classic, id="classic"),
-        pytest.param(wagner_fischer, id="wagner_fischer"),
-        pytest.param(wagner_fischer_native, id="native"),
-        pytest.param(levenshtein, id="levenshtein"),
-    ],
+    ALL_LEVENSHTEIN_FUNCTION_PYTEST_PARAMS,
 )
-def test_distance(a: str, b: str, distance: int, fn: Callable[[str, str], int]) -> None:
+def test_distance(a: str, b: str, distance: int, fn: LevenshteinFn) -> None:
     assert fn(a, b) == distance

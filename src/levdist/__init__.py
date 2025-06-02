@@ -8,14 +8,16 @@ import typing
 from ._classic import classic
 from ._wagner_fischer import wagner_fischer
 
+LevenshteinFn = typing.Callable[[str, str], int]
+
 if typing.TYPE_CHECKING:
-    levenshtein: typing.Callable[[str, str], int]
+    levenshtein: LevenshteinFn
 
 try:
-    from .native import wagner_fischer_native  # type: ignore[import-not-found]
+    from ._native import wagner_fischer_native
 
     levenshtein = wagner_fischer_native
 except ImportError:
     levenshtein = wagner_fischer
 
-__all__ = ["classic", "levenshtein", "wagner_fischer"]
+__all__ = ["LevenshteinFn", "classic", "levenshtein", "wagner_fischer"]

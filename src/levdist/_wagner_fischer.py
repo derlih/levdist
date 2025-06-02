@@ -1,7 +1,5 @@
 def wagner_fischer(a: str, b: str) -> int:
-    """Fast (Wagner-Fisher) algorithm to calculate edit distance.
-
-    https://en.wikipedia.org/wiki/Wagner%E2%80%93Fischer_algorithm
+    """Calculate edit distance using a fast (Wagner-Fisher) algorithm.
 
     Args:
         a (str): First string

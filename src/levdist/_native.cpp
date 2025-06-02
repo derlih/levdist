@@ -113,10 +113,18 @@ static PyObject *method_wagner_fischer(PyObject *self, PyObject *args) {
 
 static PyMethodDef NativeMethods[] = {
     {"wagner_fischer_native", method_wagner_fischer, METH_VARARGS,
-     "Native C++ implementation of Wagner-Fisher algorithm"},
+     "Calculate edit distance using a fast (Wagner-Fisher) algorithm.\n"
+     "\n"
+     "    Args:\n"
+     "        a (str): First string\n"
+     "        b (str): Second string"
+     "\n"
+     "    Returns:\n"
+     "        int: Edit distance\n"
+     "\n"},
     {NULL, NULL, 0, NULL}};
 
 static struct PyModuleDef nativemodule = {PyModuleDef_HEAD_INIT, "native", NULL,
                                           -1, NativeMethods};
 
-PyMODINIT_FUNC PyInit_native(void) { return PyModule_Create(&nativemodule); }
+PyMODINIT_FUNC PyInit__native(void) { return PyModule_Create(&nativemodule); }
