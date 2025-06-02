@@ -16,6 +16,7 @@ BUILD_FLAGS = {
         "-std=c++20",
     ],
     Compiler.GCC: [
+        "-std=c++20",
     ],
     Compiler.MSVC: [
     ],
