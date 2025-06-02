@@ -109,7 +109,7 @@ jobs:
         run: |
           pdm test-cov
           xcrun llvm-profdata merge -sparse coverage.profraw -o coverage.profdata
-          xcrun llvm-cov export --arch=arm64 --format=lcov --instr-profile=coverage.profdata src/levdist/native.*.so > coverage.lcov
+          xcrun llvm-cov export --arch=arm64 --format=lcov --instr-profile=coverage.profdata src/levdist/_native.*.so > coverage.lcov
         env:
           LLVM_PROFILE_FILE: coverage.profraw
       - name: Upload coverage reports to Codecov
