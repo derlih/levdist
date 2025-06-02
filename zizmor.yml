@@ -1,5 +1,5 @@
 rules:
-  template-injection:
-    ignore:
-      - update-pre-commit.yml:43
-      - update-deps.yml:32
+  unpinned-uses:
+    config:
+      policies:
+        "*": ref-pin

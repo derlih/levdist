@@ -24,8 +24,8 @@ repos:
     rev: v1.31.2
     hooks:
       - id: typos
-  - repo: https://github.com/woodruffw/zizmor
-    rev: v0.8.0
+  - repo: https://github.com/zizmorcore/zizmor-pre-commit
+    rev: v1.9.0
     hooks:
       - id: zizmor
   - repo: https://github.com/google/yamlfmt
