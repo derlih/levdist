@@ -2,4 +2,4 @@ rules:
   template-injection:
     ignore:
       - update-pre-commit.yml:43
-      - update-deps.yml:33
+      - update-deps.yml:32
