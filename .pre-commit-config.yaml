@@ -13,15 +13,15 @@ repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.11.12
     hooks:
-      - id: ruff
+      - id: ruff-check
         args: [--fix]
       - id: ruff-format
   - repo: https://github.com/pre-commit/mirrors-clang-format
     rev: v20.1.5
     hooks:
       - id: clang-format
-  - repo: https://github.com/crate-ci/typos
-    rev: v1.32.0
+  - repo: https://github.com/adhtruong/mirrors-typos
+    rev: v1.31.2
     hooks:
       - id: typos
   - repo: https://github.com/woodruffw/zizmor
