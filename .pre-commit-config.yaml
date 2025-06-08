@@ -11,7 +11,7 @@ repos:
       - id: check-added-large-files
       - id: debug-statements
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.11.12
+    rev: v0.11.13
     hooks:
       - id: ruff-check
         args: [--fix]
@@ -21,7 +21,7 @@ repos:
     hooks:
       - id: clang-format
   - repo: https://github.com/adhtruong/mirrors-typos
-    rev: v1.32.0
+    rev: v1.33.1
     hooks:
       - id: typos
   - repo: https://github.com/zizmorcore/zizmor-pre-commit
