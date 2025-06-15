@@ -38,6 +38,7 @@ branch = true
 omit = ["tests", "__init__.py"]
 
 
+
 [tool.pdm]
 distribution = true
 
@@ -67,8 +68,8 @@ benchmark = [
 ]
 test = [
     "pytest>=8.4.0",
-    "coverage>=7.8.2",
-    "pytest-cov>=6.1.1",
+    "coverage>=7.9.1",
+    "pytest-cov>=6.2.1",
     "psutil>=7.0.0",
 ]
 lint = [
