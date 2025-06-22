@@ -39,6 +39,7 @@ omit = ["tests", "__init__.py"]
 
 
 
+
 [tool.pdm]
 distribution = true
 
@@ -67,14 +68,14 @@ benchmark = [
     "rich>=14.0.0",
 ]
 test = [
-    "pytest>=8.4.0",
+    "pytest>=8.4.1",
     "coverage>=7.9.1",
     "pytest-cov>=6.2.1",
     "psutil>=7.0.0",
 ]
 lint = [
     "pre-commit>=4.2.0",
-    "mypy>=1.16.0",
+    "mypy>=1.16.1",
 ]
 
 [tool.cibuildwheel]
