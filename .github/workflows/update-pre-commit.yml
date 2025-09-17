@@ -15,7 +15,7 @@ jobs:
           persist-credentials: false
           ref: main
       - name: Install python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         id: setup-python
         with:
           python-version: 3.13
