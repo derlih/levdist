@@ -4,7 +4,7 @@ dynamic = ["version"]
 description = "Package to calculate the Levenstein distance"
 authors = [{ name = "Dmitry Erlikh", email = "derlih@gmail.com" }]
 dependencies = []
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 readme = "README.md"
 license = { text = "MIT" }
 keywords = ["levenstein", "edit distance"]
@@ -14,11 +14,11 @@ classifiers = [
     "Typing :: Typed",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
 ]
 
 [project.urls]
@@ -36,9 +36,6 @@ exclude = ["tests"]
 [tool.coverage.run]
 branch = true
 omit = ["tests", "__init__.py"]
-
-
-
 
 
 [tool.pdm]
@@ -74,10 +71,7 @@ test = [
     "pytest-cov>=6.2.1",
     "psutil>=7.0.0",
 ]
-lint = [
-    "pre-commit>=4.2.0",
-    "mypy>=1.16.1",
-]
+lint = ["pre-commit>=4.2.0", "mypy>=1.16.1"]
 
 [tool.cibuildwheel]
 test-groups = ["test"]
