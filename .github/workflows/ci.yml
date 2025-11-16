@@ -14,7 +14,7 @@ jobs:
     strategy:
       matrix:
         # It threats '3.10' as 3.1
-        python_version: ['3.10.19', '3.11', '3.12', '3.13', '3.14', 'pypy3.10', 'pypy3.11']
+        python_version: ['3.10.11', '3.11', '3.12', '3.13', '3.14', 'pypy3.10', 'pypy3.11']
       fail-fast: true
     runs-on: ubuntu-latest
     steps:
@@ -48,7 +48,7 @@ jobs:
     strategy:
       matrix:
         # It threats '3.10' as 3.1
-        python_version: ['3.10.19', '3.11', '3.12', '3.13', '3.14', 'pypy3.10', 'pypy3.11']
+        python_version: ['3.10.11', '3.11', '3.12', '3.13', '3.14', 'pypy3.10', 'pypy3.11']
       fail-fast: true
     runs-on: windows-latest
     steps:
@@ -93,7 +93,7 @@ jobs:
     strategy:
       matrix:
         # It threats '3.10' as 3.1
-        python_version: ['3.10.19', '3.11', '3.12', '3.13', '3.14', 'pypy3.10', 'pypy3.11']
+        python_version: ['3.10.11', '3.11', '3.12', '3.13', '3.14', 'pypy3.10', 'pypy3.11']
       fail-fast: true
     runs-on: macos-latest
     steps:
