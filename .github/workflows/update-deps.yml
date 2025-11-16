@@ -17,7 +17,8 @@ jobs:
       - name: Setup PDM
         uses: pdm-project/setup-pdm@v4
         with:
-          python-version: '3.10'
+          # It threats '3.10' as 3.1
+          python-version: '3.10.19'
           cache: true
       - name: Update dependencies
         run: pdm update --update-all --unconstrained
