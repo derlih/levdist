@@ -24,7 +24,7 @@ jobs:
         run: pdm update --update-all --unconstrained
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.REPO_PAT }}
           branch: update/deps-autoupdate-${{ github.run_id }}
