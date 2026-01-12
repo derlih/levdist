@@ -31,7 +31,7 @@ jobs:
           CIBW_BUILD: ${{ matrix.python-version }}-*
           CIBW_ARCHS_LINUX: auto aarch64 ppc64le s390x
       - name: Upload wheel artifact
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: dist-${{ matrix.os }}-${{ matrix.python-version }}
           path: wheelhouse/*
@@ -62,7 +62,7 @@ jobs:
           CIBW_BUILD: ${{ matrix.python-version }}-*
           CIBW_ARCHS_LINUX: auto aarch64
       - name: Upload wheel artifact
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: dist-${{ matrix.os }}-${{ matrix.python-version }}
           path: wheelhouse/*
