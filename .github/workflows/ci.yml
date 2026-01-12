@@ -35,7 +35,7 @@ jobs:
       - name: Run unit tests with coverage
         run: pdm test-cov
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v5.5.1
+        uses: codecov/codecov-action@v5.5.2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
@@ -80,7 +80,7 @@ jobs:
       - name: Run unit tests with coverage
         run: OpenCppCoverage --sources=src\levdist --modules=src\levdist --export_type=cobertura:native.xml --optimized_build  --cover_children  -- pdm test-cov
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v5.5.1
+        uses: codecov/codecov-action@v5.5.2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
@@ -119,7 +119,7 @@ jobs:
         env:
           LLVM_PROFILE_FILE: coverage.profraw
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v5.5.1
+        uses: codecov/codecov-action@v5.5.2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
