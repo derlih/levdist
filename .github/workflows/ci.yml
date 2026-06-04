@@ -22,7 +22,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Setup PDM
-        uses: pdm-project/setup-pdm@v4
+        uses: pdm-project/setup-pdm@94a823180e06fcde4ad29308721954a521c96ed0 # v4
         with:
           python-version: ${{ matrix.python_version }}
           cache: true
@@ -34,7 +34,7 @@ jobs:
       - name: Run unit tests with coverage
         run: pdm test-cov
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v6.0.1
+        uses: codecov/codecov-action@e79a6962e0d4c0c17b229090214935d2e33f8354 # v6.0.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
@@ -67,7 +67,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Setup PDM
-        uses: pdm-project/setup-pdm@v4
+        uses: pdm-project/setup-pdm@94a823180e06fcde4ad29308721954a521c96ed0 # v4
         with:
           python-version: ${{ matrix.python_version }}
           cache: true
@@ -78,7 +78,7 @@ jobs:
       - name: Run unit tests with coverage
         run: OpenCppCoverage --sources=src\levdist --modules=src\levdist --export_type=cobertura:native.xml --optimized_build  --cover_children  -- pdm test-cov
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v6.0.1
+        uses: codecov/codecov-action@e79a6962e0d4c0c17b229090214935d2e33f8354 # v6.0.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
@@ -99,7 +99,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Setup PDM
-        uses: pdm-project/setup-pdm@v4
+        uses: pdm-project/setup-pdm@94a823180e06fcde4ad29308721954a521c96ed0 # v4
         with:
           python-version: ${{ matrix.python_version }}
           cache: true
@@ -116,7 +116,7 @@ jobs:
         env:
           LLVM_PROFILE_FILE: coverage.profraw
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v6.0.1
+        uses: codecov/codecov-action@e79a6962e0d4c0c17b229090214935d2e33f8354 # v6.0.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
