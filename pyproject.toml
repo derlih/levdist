@@ -4,7 +4,7 @@ dynamic = ["version"]
 description = "Package to calculate the Levenstein distance"
 authors = [{ name = "Dmitry Erlikh", email = "derlih@gmail.com" }]
 dependencies = []
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 readme = "README.md"
 license = { text = "MIT" }
 keywords = ["levenstein", "edit distance"]
@@ -14,7 +14,6 @@ classifiers = [
     "Typing :: Typed",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
@@ -59,8 +58,7 @@ benchmark = [
     "pylev>=1.4.0",
     "Levenshtein>=0.27.1",
     "python-Levenshtein>=0.27.1",
-    "leven>=1.0.4; python_version <= \"3.10\" and platform_python_implementation == \"CPython\"",
-    "editdistance>=0.8.1",
+"editdistance>=0.8.1",
     "typer>=0.16.0",
     "humanize>=4.12.3",
     "rich>=14.0.0",
@@ -81,7 +79,7 @@ test-command = "pytest {project}/tests"
 line-length = 88
 indent-width = 4
 # Must be in sync with `requires-python` in this file
-target-version = "py39"
+target-version = "py311"
 
 extend-exclude = ["pdm_build.py"]
 

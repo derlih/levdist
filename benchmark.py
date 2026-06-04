@@ -13,16 +13,7 @@ from rich.table import Table
 
 from levdist import levenshtein
 
-try:
-    from leven import levenshtein
-
-    LEVEN_PRESENT = True
-except ImportError:
-    LEVEN_PRESENT = False
-
 ITERATIONS = 1_000_000
-# `leven` has some hacks that remove same prefix and suffix.
-# To measure it fair I adjusted the strings.
 S1 = "1Levenshtein1"
 S2 = "2Frankenstein2"
 DISTANCE = levenshtein(S1, S2)
@@ -62,16 +53,6 @@ PACKAGES = [
         f"editdistance.eval('{S1}', '{S2}')",
     ),
 ]
-
-if LEVEN_PRESENT:
-    PACKAGES.append(
-        PackageToTest(
-            "leven",
-            "https://pypi.org/project/leven/",
-            "from leven import levenshtein",
-            f"levenshtein('{S1}', '{S2}')",
-        ),
-    )
 
 
 def benchmark(pkg: PackageToTest) -> float:  # noqa: D103
