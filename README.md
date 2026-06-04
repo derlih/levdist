@@ -30,7 +30,7 @@ distance = levenshtein("dog", "cat")
 
 1. Install PDM using [this](https://pdm-project.org/latest/#installation) documentation
 2. Install development dependencies `pdm install`
-3. Install `pre-commit` hooks `pre-commit install`
+3. Install `prek` hooks `prek install`
 
 #### Testing
 
@@ -53,7 +53,7 @@ The coverage is published to [CodeCov](https://app.codecov.io/gh/derlih/levdist)
 
 ##### Dependency updates
 
-To update dependencies and `pre-commit` hooks there is a GHA job that is scheduled to run weekly.
+To update dependencies and `prek` hooks there is a GHA job that is scheduled to run weekly.
 
 ##### Release
 

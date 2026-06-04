@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-13, macos-14]
-        python-version: [cp39, cp310, cp311, cp312, cp313]
+        python-version: [cp311, cp312, cp313]
       fail-fast: true
     runs-on: ${{ matrix.os }}
     steps:
@@ -85,8 +85,7 @@ jobs:
       - name: Setup PDM
         uses: pdm-project/setup-pdm@v4
         with:
-          # It threats '3.10' as 3.1
-          python-version: '3.10.11'
+          python-version: '3.11'
           cache: true
       - name: Install twine
         run: pip install twine
