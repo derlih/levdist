@@ -18,7 +18,7 @@ jobs:
       - name: Setup PDM
         uses: pdm-project/setup-pdm@v4
         with:
-          python-version: '3.11'
+          python-version: "3.11"
           cache: true
       - name: Install deps
         run: pdm install --without benchmark
@@ -29,7 +29,7 @@ jobs:
           key: ${{ runner.os }}-prek-${{ hashFiles('.pre-commit-config.yaml') }}
       - name: Linter
         run: pdm lint
-      - uses: autofix-ci/action@635ffb0c9798bd160680f18fd73371e355b85f27
+      - uses: autofix-ci/action@v1.3.4
         if: always()
       - name: Type check
         run: pdm mypy
