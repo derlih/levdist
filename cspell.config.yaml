@@ -1,7 +1,4 @@
 version: "0.2"
-language:
-  - en
-  - ru
 ignorePaths:
   - pdm.lock
   - .gitignore
@@ -26,3 +23,7 @@ words:
   - CIBW
   - ARCHS
   - pwsh
+  - softprops
+  - profdata
+  - profraw
+  - fprofile
