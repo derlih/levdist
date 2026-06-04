@@ -60,6 +60,7 @@ jobs:
         uses: pypa/cibuildwheel@8d2b08b68458a16aeb24b64e68a09ab1c8e82084 # v3.4.1
         env:
           CIBW_BUILD: ${{ matrix.python-version }}-*
+          CIBW_ENABLE: pypy
           CIBW_ARCHS_LINUX: auto aarch64
       - name: Upload wheel artifact
         uses: actions/upload-artifact@v7
