@@ -1,16 +1,19 @@
-def wagner_fischer(a: str, b: str) -> int:
+def wagner_fischer(a: str | bytes, b: str | bytes) -> int:
     """Calculate edit distance using a fast (Wagner-Fisher) algorithm.
 
     Args:
-        a (str): First string
-        b (str): Second string
+        a (str | bytes): First string
+        b (str | bytes): Second string
 
     Returns:
         int: Edit distance
 
     """
-    len_a = len(a)
-    len_b = len(b)
+    seq_a = list(a) if isinstance(a, bytes) else [ord(c) for c in a]
+    seq_b = list(b) if isinstance(b, bytes) else [ord(c) for c in b]
+
+    len_a = len(seq_a)
+    len_b = len(seq_b)
     v0 = list(range(len_b + 1))
     v1 = [0 for _ in range(len_b + 1)]
 
@@ -20,7 +23,7 @@ def wagner_fischer(a: str, b: str) -> int:
         for j in range(len_b):
             deletion_cost = v0[j + 1] + 1
             insertion_cost = v1[j] + 1
-            substitution_cost = v0[j] if a[i] == b[j] else v0[j] + 1
+            substitution_cost = v0[j] if seq_a[i] == seq_b[j] else v0[j] + 1
 
             v1[j + 1] = min(deletion_cost, insertion_cost, substitution_cost)
 
