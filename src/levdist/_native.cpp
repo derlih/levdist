@@ -134,10 +134,19 @@ static PyObject *method_wagner_fischer(PyObject *self, PyObject *args) {
       a_bytes ? (const void *)PyBytes_AS_STRING(a) : PyUnicode_DATA(a);
   const void *ptr_b =
       b_bytes ? (const void *)PyBytes_AS_STRING(b) : PyUnicode_DATA(b);
+  Py_ssize_t row_len = len_a, col_len = len_b;
+
+  // Ensure b is the shorter string so the working array is sized to min(len_a,
+  // len_b).
+  if (row_len < col_len) {
+    std::swap(ptr_a, ptr_b);
+    std::swap(row_len, col_len);
+    std::swap(kind_a, kind_b);
+  }
 
   const auto distance_fn =
       distance_fns[kind_to_idx(kind_a)][kind_to_idx(kind_b)];
-  return PyLong_FromSsize_t(distance_fn(ptr_a, len_a, ptr_b, len_b));
+  return PyLong_FromSsize_t(distance_fn(ptr_a, row_len, ptr_b, col_len));
 }
 
 static PyMethodDef NativeMethods[] = {
