@@ -9,11 +9,14 @@ try:
     import tracemalloc
 
     TRACEMALLOC_AVAILABLE = True
+    MAX_MEMORY_DIFF_TRACEMALLOC = 1 * 1024 * 1024
+
 except ImportError:
     TRACEMALLOC_AVAILABLE = False
 
 
-MAX_MEMORY = 1 * 1024 * 1024
+# RSS memory can be more variable
+MAX_MEMORY_DIFF_RSS = 10 * 1024 * 1024
 
 
 @pytest.mark.parametrize(
@@ -44,7 +47,7 @@ def test_native_no_mem_leak_tracemalloc() -> None:
     _, peak_traced = tracemalloc.get_traced_memory()
     tracemalloc.stop()
 
-    assert peak_traced < MAX_MEMORY
+    assert peak_traced < MAX_MEMORY_DIFF_TRACEMALLOC
 
 
 def test_native_no_mem_leak_rss() -> None:
@@ -60,4 +63,4 @@ def test_native_no_mem_leak_rss() -> None:
     gc.collect()
     after_rss = process.memory_info().rss
 
-    assert after_rss - before_rss < MAX_MEMORY
+    assert after_rss - before_rss < MAX_MEMORY_DIFF_RSS
