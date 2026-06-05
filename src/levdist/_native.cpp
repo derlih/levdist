@@ -78,7 +78,7 @@ constexpr int kind_to_idx(int kind) noexcept {
   }
 }
 
-static const DistanceFn distance_fns[3][3] = {
+static constexpr DistanceFn distance_fns[3][3] = {
     {typed_distance<Py_UCS1, Py_UCS1>, typed_distance<Py_UCS1, Py_UCS2>,
      typed_distance<Py_UCS1, Py_UCS4>},
     {typed_distance<Py_UCS2, Py_UCS1>, typed_distance<Py_UCS2, Py_UCS2>,
