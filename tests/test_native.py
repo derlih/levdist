@@ -1,9 +1,12 @@
 import gc
+import tracemalloc
 from typing import Any
 
 import psutil
 import pytest
 from levdist._native import wagner_fischer_native
+
+MAX_MEMORY = 1 * 1024 * 1024
 
 
 @pytest.mark.parametrize(
@@ -22,19 +25,24 @@ def test_native_wrong_arguments(params: Any) -> None:  # noqa: ANN401
 
 
 def test_native_no_mem_leak() -> None:
-    # Warm up
+    # warm up
     wagner_fischer_native("a-dog", "cat-b")
 
     process = psutil.Process()
     gc.collect()
+    before_rss = process.memory_info().rss
 
-    before = process.memory_info().rss
-    iterations = 10_000_000
+    tracemalloc.start()
+    tracemalloc.clear_traces()
 
-    for i in range(iterations):
-        wagner_fischer_native(f"{i}-dog", "cat-{i}")
+    for i in range(100_000):
+        wagner_fischer_native(f"{i}-dog", f"cat-{i}")
+
+    _, peak_traced = tracemalloc.get_traced_memory()
+    tracemalloc.stop()
 
     gc.collect()
-    after = process.memory_info().rss
+    after_rss = process.memory_info().rss
 
-    assert after - before < iterations
+    assert peak_traced < MAX_MEMORY  # PyMem_* leaks (precise)
+    assert after_rss - before_rss < MAX_MEMORY  # raw malloc leaks (broad)
