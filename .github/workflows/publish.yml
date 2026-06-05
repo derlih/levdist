@@ -11,7 +11,7 @@ jobs:
       contents: read
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-13, macos-14]
+        os: [ubuntu-latest, windows-latest, macos-latest, macos-15-intel]
         python-version: [cp311, cp312, cp313]
       fail-fast: true
     runs-on: ${{ matrix.os }}
@@ -42,7 +42,7 @@ jobs:
     name: Build wheels for PyPy
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-13, macos-14]
+        os: [ubuntu-latest, windows-latest, macos-latest, macos-15-intel]
         python-version: [pp311]
       fail-fast: true
     runs-on: ${{ matrix.os }}
@@ -86,7 +86,7 @@ jobs:
       - name: Setup PDM
         uses: pdm-project/setup-pdm@973541a5febeafcfdadf8a51211435be6ecfd90f # v4.5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
           cache: true
       - name: Install twine
         run: pip install twine
