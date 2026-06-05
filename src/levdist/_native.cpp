@@ -2,6 +2,7 @@
 #include <Python.h>
 
 #include <stdlib.h>
+#include <string.h>
 #include <vector>
 
 #define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
@@ -22,9 +23,9 @@ public:
 template <typename T> using Vector = std::vector<T, PyAllocator<T> >;
 // clang-format on
 
-template <typename CharT>
-Py_ssize_t calc_distance(CharT *data_a, Py_ssize_t len_a, CharT *data_b,
-                         Py_ssize_t len_b) {
+template <typename CharA, typename CharB>
+Py_ssize_t calc_distance(const CharA *data_a, Py_ssize_t len_a,
+                         const CharB *data_b, Py_ssize_t len_b) {
   Vector<Py_ssize_t> v(2 * (len_b + 1));
   Py_ssize_t *v0 = v.data();
   Py_ssize_t *v1 = v0 + len_b + 1;
@@ -56,22 +57,35 @@ Py_ssize_t calc_distance(CharT *data_a, Py_ssize_t len_a, CharT *data_b,
   return v0[len_b];
 }
 
-static void fill_ucs4_from_str(Vector<Py_UCS4> &out, PyObject *s,
-                               Py_ssize_t len) {
-  int kind = PyUnicode_KIND(s);
-  void *data = PyUnicode_DATA(s);
-  for (Py_ssize_t i = 0; i < len; ++i) {
-    out[i] = PyUnicode_READ(kind, data, i);
+typedef Py_ssize_t (*DistanceFn)(const void *, Py_ssize_t, const void *,
+                                 Py_ssize_t);
+
+template <typename CharA, typename CharB>
+static Py_ssize_t typed_distance(const void *a, Py_ssize_t len_a, const void *b,
+                                 Py_ssize_t len_b) {
+  return calc_distance(static_cast<const CharA *>(a), len_a,
+                       static_cast<const CharB *>(b), len_b);
+}
+
+constexpr int kind_to_idx(int kind) noexcept {
+  switch (kind) {
+  case PyUnicode_1BYTE_KIND:
+    return 0;
+  case PyUnicode_2BYTE_KIND:
+    return 1;
+  default:
+    return 2; // PyUnicode_4BYTE_KIND
   }
 }
 
-static void fill_ucs4_from_bytes(Vector<Py_UCS4> &out, PyObject *s,
-                                 Py_ssize_t len) {
-  const unsigned char *data = (const unsigned char *)PyBytes_AS_STRING(s);
-  for (Py_ssize_t i = 0; i < len; ++i) {
-    out[i] = data[i];
-  }
-}
+static const DistanceFn distance_fns[3][3] = {
+    {typed_distance<Py_UCS1, Py_UCS1>, typed_distance<Py_UCS1, Py_UCS2>,
+     typed_distance<Py_UCS1, Py_UCS4>},
+    {typed_distance<Py_UCS2, Py_UCS1>, typed_distance<Py_UCS2, Py_UCS2>,
+     typed_distance<Py_UCS2, Py_UCS4>},
+    {typed_distance<Py_UCS4, Py_UCS1>, typed_distance<Py_UCS4, Py_UCS2>,
+     typed_distance<Py_UCS4, Py_UCS4>},
+};
 
 static PyObject *method_wagner_fischer(PyObject *self, PyObject *args) {
   PyObject *a;
@@ -95,98 +109,35 @@ static PyObject *method_wagner_fischer(PyObject *self, PyObject *args) {
     return NULL;
   }
 
-  if (a_bytes && b_bytes) {
-    const Py_ssize_t len_a = PyBytes_GET_SIZE(a);
-    const Py_ssize_t len_b = PyBytes_GET_SIZE(b);
-
-    if (len_a == 0) {
-      return PyLong_FromSsize_t(len_b);
-    }
-    if (len_b == 0) {
-      return PyLong_FromSsize_t(len_a);
-    }
-
-    return PyLong_FromSsize_t(
-        calc_distance((unsigned char *)PyBytes_AS_STRING(a), len_a,
-                      (unsigned char *)PyBytes_AS_STRING(b), len_b));
-  }
-
-  if (a_str && b_str) {
-    const Py_ssize_t len_a = PyUnicode_GetLength(a);
-    const Py_ssize_t len_b = PyUnicode_GetLength(b);
-
-    if (len_a == 0) {
-      return PyLong_FromSsize_t(len_b);
-    }
-    if (len_b == 0) {
-      return PyLong_FromSsize_t(len_a);
-    }
-    if (len_a == len_b && PyUnicode_Compare(a, b) == 0) {
-      return PyLong_FromSsize_t(0);
-    }
-
-    int kind_a = PyUnicode_KIND(a);
-    int kind_b = PyUnicode_KIND(b);
-
-    if (kind_a == kind_b) {
-      switch (kind_a) {
-      case PyUnicode_1BYTE_KIND:
-        return PyLong_FromSsize_t(calc_distance(
-            PyUnicode_1BYTE_DATA(a), len_a, PyUnicode_1BYTE_DATA(b), len_b));
-      case PyUnicode_2BYTE_KIND:
-        return PyLong_FromSsize_t(calc_distance(
-            PyUnicode_2BYTE_DATA(a), len_a, PyUnicode_2BYTE_DATA(b), len_b));
-      case PyUnicode_4BYTE_KIND:
-        return PyLong_FromSsize_t(calc_distance(
-            PyUnicode_4BYTE_DATA(a), len_a, PyUnicode_4BYTE_DATA(b), len_b));
-      }
-    }
-
-    void *data_a = PyUnicode_DATA(a);
-    Vector<Py_UCS4> converted_a(len_a);
-    for (Py_ssize_t i = 0; i < len_a; ++i) {
-      converted_a[i] = PyUnicode_READ(kind_a, data_a, i);
-    }
-    void *data_b = PyUnicode_DATA(b);
-    Vector<Py_UCS4> converted_b(len_b);
-    for (Py_ssize_t i = 0; i < len_b; ++i) {
-      converted_b[i] = PyUnicode_READ(kind_b, data_b, i);
-    }
-    return PyLong_FromSsize_t(
-        calc_distance(converted_a.data(), len_a, converted_b.data(), len_b));
-  }
-
-  // Mixed str + bytes: normalize both to UCS4 code points.
-  // bytes values (0–255) map directly to the same UCS4 code points as
-  // ASCII/Latin-1.
   const Py_ssize_t len_a =
       a_bytes ? PyBytes_GET_SIZE(a) : PyUnicode_GetLength(a);
   const Py_ssize_t len_b =
       b_bytes ? PyBytes_GET_SIZE(b) : PyUnicode_GetLength(b);
 
-  if (len_a == 0) {
+  if (len_a == 0)
     return PyLong_FromSsize_t(len_b);
-  }
-  if (len_b == 0) {
+  if (len_b == 0)
     return PyLong_FromSsize_t(len_a);
+
+  if (len_a == len_b) {
+    if (a_str && b_str && PyUnicode_Compare(a, b) == 0)
+      return PyLong_FromSsize_t(0);
+    if (a_bytes && b_bytes &&
+        memcmp(PyBytes_AS_STRING(a), PyBytes_AS_STRING(b), (size_t)len_a) == 0)
+      return PyLong_FromSsize_t(0);
   }
 
-  Vector<Py_UCS4> conv_a(len_a);
-  if (a_bytes) {
-    fill_ucs4_from_bytes(conv_a, a, len_a);
-  } else {
-    fill_ucs4_from_str(conv_a, a, len_a);
-  }
+  // bytes is equivalent to UCS1: byte values 0–255 equal Latin-1 code points
+  const int kind_a = a_bytes ? PyUnicode_1BYTE_KIND : PyUnicode_KIND(a);
+  const int kind_b = b_bytes ? PyUnicode_1BYTE_KIND : PyUnicode_KIND(b);
+  const void *ptr_a =
+      a_bytes ? (const void *)PyBytes_AS_STRING(a) : PyUnicode_DATA(a);
+  const void *ptr_b =
+      b_bytes ? (const void *)PyBytes_AS_STRING(b) : PyUnicode_DATA(b);
 
-  Vector<Py_UCS4> conv_b(len_b);
-  if (b_bytes) {
-    fill_ucs4_from_bytes(conv_b, b, len_b);
-  } else {
-    fill_ucs4_from_str(conv_b, b, len_b);
-  }
-
-  return PyLong_FromSsize_t(
-      calc_distance(conv_a.data(), len_a, conv_b.data(), len_b));
+  const auto distance_fn =
+      distance_fns[kind_to_idx(kind_a)][kind_to_idx(kind_b)];
+  return PyLong_FromSsize_t(distance_fn(ptr_a, len_a, ptr_b, len_b));
 }
 
 static PyMethodDef NativeMethods[] = {
