@@ -19,6 +19,7 @@ BUILD_FLAGS = {
         "-std=c++20",
     ],
     Compiler.MSVC: [
+        "/O2",
     ],
 }
 
