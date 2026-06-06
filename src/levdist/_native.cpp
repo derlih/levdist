@@ -128,8 +128,8 @@ static PyObject *method_wagner_fischer(PyObject *self, PyObject *args) {
   }
 
   // bytes is equivalent to UCS1: byte values 0–255 equal Latin-1 code points
-  const int kind_a = a_bytes ? PyUnicode_1BYTE_KIND : PyUnicode_KIND(a);
-  const int kind_b = b_bytes ? PyUnicode_1BYTE_KIND : PyUnicode_KIND(b);
+  int kind_a = a_bytes ? PyUnicode_1BYTE_KIND : PyUnicode_KIND(a);
+  int kind_b = b_bytes ? PyUnicode_1BYTE_KIND : PyUnicode_KIND(b);
   const void *ptr_a =
       a_bytes ? (const void *)PyBytes_AS_STRING(a) : PyUnicode_DATA(a);
   const void *ptr_b =
