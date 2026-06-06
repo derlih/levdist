@@ -8,7 +8,7 @@ import typing
 from ._classic import classic
 from ._wagner_fischer import wagner_fischer
 
-LevenshteinFn = typing.Callable[[str, str], int]
+LevenshteinFn = typing.Callable[[str | bytes, str | bytes], int]
 
 if typing.TYPE_CHECKING:
     levenshtein: LevenshteinFn
