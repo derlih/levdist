@@ -1,3 +1,9 @@
+def _to_ints(s: str | bytes) -> tuple[int, ...]:
+    if isinstance(s, str):
+        return tuple(ord(c) for c in s)
+    return tuple(s)
+
+
 def wagner_fischer(a: str | bytes, b: str | bytes) -> int:
     """Calculate edit distance using a fast (Wagner-Fisher) algorithm.
 
@@ -9,13 +15,31 @@ def wagner_fischer(a: str | bytes, b: str | bytes) -> int:
         int: Edit distance
 
     """
-    seq_a = list(a) if isinstance(a, bytes) else [ord(c) for c in a]
-    seq_b = list(b) if isinstance(b, bytes) else [ord(c) for c in b]
+    len_a = len(a)
+    len_b = len(b)
 
-    len_a = len(seq_a)
-    len_b = len(seq_b)
+    if len_a == 0:
+        return len_b
+    if len_b == 0:
+        return len_a
+    if a == b:
+        return 0
+
+    if len_a < len_b:
+        a, b = b, a
+        len_a, len_b = len_b, len_a
+
+    seq_a: tuple[int, ...] | str | bytes
+    seq_b: tuple[int, ...] | str | bytes
+    if isinstance(a, bytes) is not isinstance(b, bytes):
+        seq_a = _to_ints(a)
+        seq_b = _to_ints(b)
+    else:
+        seq_a = a
+        seq_b = b
+
     v0 = list(range(len_b + 1))
-    v1 = [0 for _ in range(len_b + 1)]
+    v1 = [0] * (len_b + 1)
 
     for i in range(len_a):
         v1[0] = i + 1
