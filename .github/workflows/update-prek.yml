@@ -24,7 +24,7 @@ jobs:
       - name: Run prek auto-update
         run: prek auto-update
       - name: Restore prek hooks
-        uses: actions/cache@v5
+        uses: actions/cache@v5.0.5
         with:
           path: ~/.cache/prek
           key: prek-${{ hashFiles('.pre-commit-config.yaml') }}
