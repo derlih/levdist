@@ -22,7 +22,7 @@ jobs:
       - name: Install prek
         run: pip install prek
       - name: Run prek auto-update
-        run: prek auto-update
+        run: prek update
       - name: Restore prek hooks
         uses: actions/cache@v6.1.0
         with:
