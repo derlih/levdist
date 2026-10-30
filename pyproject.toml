@@ -91,3 +91,6 @@ extend-exclude = ["pdm_build.py"]
 [tool.ruff.lint]
 select = ["ALL"]
 fixable = ["ALL"]
+ignore = [
+  "CPY001", # Missing copyright notice at top of file
+]

@@ -17,7 +17,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
       - name: Set up QEMU
@@ -31,7 +31,7 @@ jobs:
           CIBW_BUILD: ${{ matrix.python-version }}-*
           CIBW_ARCHS_LINUX: auto aarch64 ppc64le s390x
       - name: Upload wheel artifact
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: dist-${{ matrix.os }}-${{ matrix.python-version }}
           path: wheelhouse/*
@@ -48,7 +48,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
       - name: Set up QEMU
@@ -63,7 +63,7 @@ jobs:
           CIBW_ENABLE: pypy
           CIBW_ARCHS_LINUX: auto aarch64
       - name: Upload wheel artifact
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: dist-${{ matrix.os }}-${{ matrix.python-version }}
           path: wheelhouse/*
@@ -80,7 +80,7 @@ jobs:
       url: https://pypi.org/project/levdist
     steps:
       - name: Checkout
-        uses: actions/checkout@v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
       - name: Setup PDM
@@ -94,7 +94,7 @@ jobs:
         run: pdm build --no-wheel
       - name: Download artifacts
         id: download-artifacts
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
           pattern: dist-*
           merge-multiple: true

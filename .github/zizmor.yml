@@ -1,0 +1,3 @@
+rules:
+  superfluous-actions:
+    disable: true
