@@ -39,6 +39,7 @@ omit = ["tests", "__init__.py"]
 
 
 
+
 [tool.pdm]
 distribution = true
 
@@ -72,7 +73,7 @@ test = [
     "psutil>=7.2.2",
 ]
 lint = [
-    "prek>=0.5.7",
+    "prek>=0.5.9",
     "mypy>=2.4.1",
 ]
 
