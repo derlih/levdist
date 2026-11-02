@@ -26,7 +26,7 @@ jobs:
         with:
           platforms: all
       - name: Build wheels
-        uses: pypa/cibuildwheel@b3395e271a35f73dad77f21802abe9b986dfe299 # v4.3.1
+        uses: pypa/cibuildwheel@b9e566a2b284570af229f6c2a33673410d0389a3 # v4.3.4
         env:
           CIBW_BUILD: ${{ matrix.python-version }}-*
           CIBW_ARCHS_LINUX: auto aarch64 ppc64le s390x
@@ -57,7 +57,7 @@ jobs:
         with:
           platforms: all
       - name: Build wheels
-        uses: pypa/cibuildwheel@b3395e271a35f73dad77f21802abe9b986dfe299 # v4.3.1
+        uses: pypa/cibuildwheel@b9e566a2b284570af229f6c2a33673410d0389a3 # v4.3.4
         env:
           CIBW_BUILD: ${{ matrix.python-version }}-*
           CIBW_ENABLE: pypy
