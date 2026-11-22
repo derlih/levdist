@@ -42,6 +42,7 @@ omit = ["tests", "__init__.py"]
 
 
 
+
 [tool.pdm]
 distribution = true
 
@@ -64,18 +65,18 @@ benchmark = [
     "Levenshtein>=0.27.5",
     "python-Levenshtein>=0.27.5",
     "editdistance>=0.8.1",
-    "typer>=0.29.1",
+    "typer>=0.29.2",
     "humanize>=4.17.0",
     "rich>=15.0.0",
 ]
 test = [
     "pytest>=9.2.0",
-    "coverage>=7.17.3",
+    "coverage>=7.17.4",
     "pytest-cov>=7.1.0",
     "psutil>=7.2.2",
 ]
 lint = [
-    "prek>=0.5.10",
+    "prek>=0.5.11",
     "mypy>=2.4.1",
 ]
 
